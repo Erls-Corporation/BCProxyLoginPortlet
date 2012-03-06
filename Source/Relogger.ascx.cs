@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using Jenzabar.Portal.Framework;
-using Jenzabar.Portal.Framework.Web;
 using Jenzabar.Common;
 using Jenzabar.Portal.Framework.Web.UI;
 
@@ -38,26 +33,26 @@ namespace BCProxyLogin
 
         void lnbRelog_Click(object sender, EventArgs e)
         {
-            HttpContext.Current.Session.Remove("userSections");
-            HttpContext.Current.Session.Remove("isFaculty");
+            var originalUser = HttpContext.Current.Session["ProxyLoginOriginalUser"].ToString();
+            var dontRedirect = HttpContext.Current.Session["ProxyLoginDontRedirect"];
+            HttpContext.Current.Session.Clear();
+            HttpContext.Current.Session["ProxyLoginDontRedirect"] = dontRedirect;
+            HttpContext.Current.Session["ProxyLoginOriginalUser"] = originalUser;
             this.PortalGlobal.Login(PortalUser.Current.Username, String.Empty);
-            RedirectUrl();
+            if (dontRedirect == null)
+                RedirectUrl();
             
         }
 
         void lnbLogback_Click(object sender, EventArgs e)
         {
             String originalUser = HttpContext.Current.Session["ProxyLoginOriginalUser"].ToString();
-            HttpContext.Current.Session.Remove("userSections");
-            HttpContext.Current.Session.Remove("isFaculty");
-            HttpContext.Current.Session.Remove("ProxyLoginOriginalUser");
+            var dontRedirect = HttpContext.Current.Session["ProxyLoginDontRedirect"];
+            HttpContext.Current.Session.Clear();
             this.PortalGlobal.Login(originalUser, String.Empty);
-            if (HttpContext.Current.Session["ProxyLoginDontRedirect"] ==null){
+
+            if (dontRedirect == null)
                 RedirectUrl();
-            }else
-            {
-                HttpContext.Current.Session.Remove("ProxyLoginDontRedirect");
-            }
         }
 
         private void RedirectUrl()

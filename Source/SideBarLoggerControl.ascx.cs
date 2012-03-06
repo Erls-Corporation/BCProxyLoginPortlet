@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Web;
 using BCNHibernate;
+using Jenzabar.Common.Configuration;
 using Jenzabar.Common.Globalization;
 using Jenzabar.Portal.Framework;
 using Jenzabar.Portal.Framework.Facade;
 using Jenzabar.Common;
 using Jenzabar.Portal.Framework.Web.UI;
-using Jenzabar.Portal.Framework.Configuration;
 
 namespace BCProxyLogin
 {
@@ -15,9 +15,9 @@ namespace BCProxyLogin
         private IPortletTemplateFacade _portletTemplateFacade;
         private BCProxyLogin _bcProxyLogin;
         private PortletTemplate _portletTemplate;
-        private bool _requirePassword = Settings.GetConfigBoolean("C_PortletSettings", "CUS_BC_PL_ENABLE_PW");
-        private bool _logIPAddress = Settings.GetConfigBoolean("C_PortletSettings", "CUS_BC_PL_LOG_IP");
-        private bool _logFailures = Settings.GetConfigBoolean("C_PortletSettings", "CUS_BC_PL_LOG_FAILURES");
+        private readonly bool _requirePassword = ConfigSettings.GetConfigBoolean("C_PortletSettings", "CUS_BC_PL_ENABLE_PW");
+        private readonly bool _logIPAddress = ConfigSettings.GetConfigBoolean("C_PortletSettings", "CUS_BC_PL_LOG_IP");
+        private readonly bool _logFailures = ConfigSettings.GetConfigBoolean("C_PortletSettings", "CUS_BC_PL_LOG_FAILURES");
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -40,7 +40,7 @@ namespace BCProxyLogin
                 divmessage.InnerHtml = Globalizer.GetGlobalizedString("CUS_BC_PL_REQUIRED_REASON").ToString();
                 divmessage.Visible = true;
             }
-            else if (_requirePassword && !validPassword())
+            else if (_requirePassword && !ValidPassword())
             {
                 divmessage.InnerHtml = Globalizer.GetGlobalizedString("CUS_BC_PL_INVALID_PW").ToString();
                 divmessage.Visible = true;
@@ -71,10 +71,8 @@ namespace BCProxyLogin
 
                     if (LogAction(tbReason.Text.ToString(), user.ID))
                     {
-                        this.Page.Session["CX_Web_Cookie"] = null; //This is a BC only item that clears our CX Login Proxy credentials to force them to refresh.  It shouldn't affect non-BC sites however.
                         string currentUser = PortalUser.Current.Username;
-                        HttpContext.Current.Session.Remove("userSections");
-                        HttpContext.Current.Session.Remove("isFaculty");
+                        HttpContext.Current.Session.Clear();
                         this.PortalGlobal.Login(user.Username, String.Empty);
                         HttpContext.Current.Session["ProxyLoginOriginalUser"] = currentUser;
                         HttpContext.Current.Session["ProxyLoginDontRedirect"] = true;
@@ -117,12 +115,9 @@ namespace BCProxyLogin
             return user;
         }
 
-        private bool validPassword()
+        private bool ValidPassword()
         {
-            if (this.PortalGlobal.IsLoginValid(PortalUser.Current.Username, tbPassword.Text) == Jenzabar.Portal.Framework.Web.LoginResult.Valid)
-                return true;
-            else
-                return false;
+            return this.PortalGlobal.IsLoginValid(PortalUser.Current.Username, tbPassword.Text) == Jenzabar.Portal.Framework.Web.LoginResult.Valid;
         }
 
         internal bool LogAction(String reason, Guid userId)

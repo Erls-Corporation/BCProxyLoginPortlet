@@ -1,12 +1,12 @@
 using System;
 using System.Web;
 using BCNHibernate;
+using Jenzabar.Common.Configuration;
 using Jenzabar.Portal.Framework;
 using Jenzabar.Portal.Framework.Web.UI;
 using Jenzabar.Common;
 using Jenzabar.Portal.Framework.Facade;
 using Jenzabar.Common.Globalization;
-using Jenzabar.Portal.Framework.Configuration;
 
 namespace BCProxyLogin
 {
@@ -15,9 +15,9 @@ namespace BCProxyLogin
 	/// </summary>
 	public partial class Default_View : PortletViewBase
 	{
-        private bool _requirePassword = Settings.GetConfigBoolean("C_PortletSettings", "CUS_BC_PL_ENABLE_PW");
-        private bool _logIPAddress = Settings.GetConfigBoolean("C_PortletSettings", "CUS_BC_PL_LOG_IP");
-        private bool _logFailures = Settings.GetConfigBoolean("C_PortletSettings", "CUS_BC_PL_LOG_FAILURES");
+        private readonly bool _requirePassword = ConfigSettings.GetConfigBoolean("C_PortletSettings", "CUS_BC_PL_ENABLE_PW");
+        private readonly bool _logIpAddress = ConfigSettings.GetConfigBoolean("C_PortletSettings", "CUS_BC_PL_LOG_IP");
+        private readonly bool _logFailures = ConfigSettings.GetConfigBoolean("C_PortletSettings", "CUS_BC_PL_LOG_FAILURES");
 
 		protected void Page_Load(object sender, System.EventArgs e)
 		{
@@ -98,10 +98,9 @@ namespace BCProxyLogin
 
                     if (LogAction(tbReason.Text.ToString(), user.ID))
                     {
-                        this.Page.Session["CX_Web_Cookie"] = null; //This is a BC only item that clears our CX Login Proxy credentials to force them to refresh.  It shouldn't affect non-BC sites however.
-                        string currentUser = PortalUser.Current.Username;
-                        HttpContext.Current.Session.Remove("userSections");
-                        HttpContext.Current.Session.Remove("isFaculty");
+                        String currentUser = PortalUser.Current.Username;
+                        HttpContext.Current.Session.Clear();
+                        
                         this.PortalGlobal.Login(user.Username, String.Empty);
                         HttpContext.Current.Session["ProxyLoginOriginalUser"] = currentUser;
                         BCProxyLogin.RedirectUrl(Response);
@@ -147,7 +146,7 @@ namespace BCProxyLogin
             {
                 var logger = new BCLoggerMapperService();
 
-                if (_logIPAddress)
+                if (_logIpAddress)
                     reason = reason + " (" + Request.UserHostAddress + ")";
                 
                 logger.AddLog(this.ParentPortlet.Portlet.PortletTemplate.ID.AsGuid, PortalUser.Current.ID.AsGuid, userId, reason, DateTime.Now);
