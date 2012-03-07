@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Specialized;
 using System.Web;
 using BCNHibernate;
 using Jenzabar.Common.Configuration;
@@ -74,6 +75,7 @@ namespace BCProxyLogin
                         string currentUser = PortalUser.Current.Username;
                         HttpContext.Current.Session.Clear();
                         this.PortalGlobal.Login(user.Username, String.Empty);
+                        HttpContext.Current.Session["file_access"] = new StringDictionary(); // UploadFile doesn't check to see if there is a valid StringDictionary here, and does a cast.  This causes a unhandled exception that bubbles up to a YSOD
                         HttpContext.Current.Session["ProxyLoginOriginalUser"] = currentUser;
                         HttpContext.Current.Session["ProxyLoginDontRedirect"] = true;
                     }

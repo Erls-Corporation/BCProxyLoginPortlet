@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Specialized;
 using System.Web;
 using Jenzabar.Portal.Framework;
 using Jenzabar.Common;
@@ -38,6 +39,7 @@ namespace BCProxyLogin
             HttpContext.Current.Session.Clear();
             HttpContext.Current.Session["ProxyLoginDontRedirect"] = dontRedirect;
             HttpContext.Current.Session["ProxyLoginOriginalUser"] = originalUser;
+            HttpContext.Current.Session["file_access"] = new StringDictionary();// UploadFile doesn't check to see if there is a valid StringDictionary here, and does a cast.  This causes a unhandled exception that bubbles up to a YSOD
             this.PortalGlobal.Login(PortalUser.Current.Username, String.Empty);
             if (dontRedirect == null)
                 RedirectUrl();
@@ -49,6 +51,7 @@ namespace BCProxyLogin
             String originalUser = HttpContext.Current.Session["ProxyLoginOriginalUser"].ToString();
             var dontRedirect = HttpContext.Current.Session["ProxyLoginDontRedirect"];
             HttpContext.Current.Session.Clear();
+            HttpContext.Current.Session["file_access"] = new StringDictionary();// UploadFile doesn't check to see if there is a valid StringDictionary here, and does a cast.  This causes a unhandled exception that bubbles up to a YSOD
             this.PortalGlobal.Login(originalUser, String.Empty);
 
             if (dontRedirect == null)
