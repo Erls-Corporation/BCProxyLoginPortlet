@@ -1,4 +1,4 @@
-USE [ICS_NET_DEV];
+USE [ICS_NET];
 SET NOCOUNT ON;
 SET XACT_ABORT ON;
 GO
@@ -46,17 +46,7 @@ INSERT INTO [dbo].[FWK_ConfigSettings]
 			'CUS_BC_PL_LOG_FAILURES',
             'true',
             'true');   
-
-INSERT INTO [dbo].[FWK_ConfigSettings]
-           ([Category]
-           ,[Key]
-           ,[Value]
-           ,[DefaultValue])
-     VALUES
-           ('C_PortletSettings',
-			'CUS_BC_PL_ALLOWRELOGIN',
-            'false',
-            'false');         
+    
 GO
 
 
