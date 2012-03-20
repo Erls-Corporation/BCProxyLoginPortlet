@@ -72,7 +72,19 @@ INSERT INTO [dbo].[FWK_ConfigSettings]
            ('C_PortletSettings',
 			'CUS_BC_PL_LOG_FAILURES',
             'true',
-            'true');           
+            'true');     
+
+INSERT INTO [dbo].[FWK_ConfigSettings]
+           ([Category]
+           ,[Key]
+           ,[Value]
+           ,[DefaultValue])
+     VALUES
+           ('C_PortletSettings',
+			'CUS_BC_PL_ALLOWRELOGIN',
+            'true',
+            'true');     
+      
 GO
 
 
