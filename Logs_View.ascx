@@ -1,9 +1,10 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Logs_View.ascx.cs" Inherits="BCProxyLogin.Logs_View" %>
+<%@ Import Namespace="System.Data" %>
+
 <link href="<%= this.ResolveUrl("~/ClientConfig/css/jqueryDataTable.css") %>" rel="stylesheet"
     type="text/css" />
 <script type="text/javascript">
 
-    var data = <%= this.GetData() %>;
     jQuery(function($) {
         if ($.fn.dataTableExt == undefined) {
             $.getScript('<%= this.ResolveUrl("~/ClientConfig/js/jquery.dataTables.min.js") %>', function() {
@@ -19,34 +20,52 @@
                 "aaSorting": [[3, 'desc']],
                 "aoColumnDefs": [
                     { "sType": "date", "aTargets": [3] },
-                    { "sWidth": "100px", "aTargets": [0, 1, 3] }
+                    { "sWidth": "100px", "aTargets": [0, 1] },
+                    { "sWidth": "110px", "aTargets": [3] }
                 ]
             });
-            oTable.fnAddData(data);
         }
     });
 </script>
+<div class="pSection">
 <br />
 <em>Note: Only getting last 500 logs.</em>
 <br />
 <br />
-<table id="logList" cellpadding="0" cellspacing="0" border="0" class="display">
-    <thead>
+<asp:Repeater ID="rptLogList" runat="server" 
+    onitemdatabound="rptLogList_ItemDataBound">
+    <HeaderTemplate>
+        <table id="logList" cellpadding="0" cellspacing="0" border="0" class="display">
+        <thead>
+            <tr>
+                <th>
+                    Source User
+                </th>
+                <th>
+                    Target User
+                </th>
+                <th>
+                    Action
+                </th>
+                <th>
+                    Date/Time
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+    </HeaderTemplate>
+    <ItemTemplate>
         <tr>
-            <th>
-                Source User
-            </th>
-            <th>
-                Target User
-            </th>
-            <th>
-                Action
-            </th>
-            <th>
-                Date/Time
-            </th>
+            <td><%# ((DataRowView)Container.DataItem)["SourceUser"]%></td>
+            <td><%# ((DataRowView)Container.DataItem)["TargetUser"]%> <asp:PlaceHolder ID="plchldRelogin" runat="server"></asp:PlaceHolder></td>
+            <td><%# ((DataRowView)Container.DataItem)["Action"]%></td>
+            <td><%# ((DataRowView)Container.DataItem)["DateTime"]%></td>
         </tr>
-    </thead>
-    <tbody>
-    </tbody>
-</table>
+    </ItemTemplate>
+    <FooterTemplate>
+            </tbody>
+        </table>
+    </FooterTemplate>
+</asp:Repeater>
+<br />
+</div>
