@@ -32,6 +32,14 @@ namespace BCProxyLogin
                     pnlPassword.Visible = true;
 
                 this.Page.Session["BCPLID"] = this.ParentPortlet.Portlet.ID.AsGuid;
+
+                if (Session["reloginCommand"] != null)
+                {
+                    string[] args = Session["reloginCommand"].ToString().Split('|');
+                    tbUserName.Text = args[0];
+                    tbReason.Text = args[1];
+                    Session.Remove("reloginCommand");
+                }
 			}
 		}
 
