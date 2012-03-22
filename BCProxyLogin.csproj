@@ -109,10 +109,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AjaxControlToolkit">
-      <HintPath>..\..\..\..\bin\AjaxControlToolkit.dll</HintPath>
+      <HintPath>V:\Program Files\Jenzabar\ICS.NET\Portal\bin\AjaxControlToolkit.dll</HintPath>
     </Reference>
     <Reference Include="BCNHibernate">
-      <HintPath>..\..\..\..\bin\BCNHibernate.dll</HintPath>
+      <HintPath>V:\Program Files\Jenzabar\ICS.NET\Portal\bin\BCNHibernate.dll</HintPath>
     </Reference>
     <Reference Include="Jenzabar.Common">
       <HintPath>..\..\..\..\bin\Jenzabar.Common.dll</HintPath>
