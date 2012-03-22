@@ -35,7 +35,7 @@
 <asp:Repeater ID="rptLogList" runat="server" 
     onitemdatabound="rptLogList_ItemDataBound">
     <HeaderTemplate>
-        <table id="logList" cellpadding="0" cellspacing="0" border="0" class="display">
+        <table id="logList" cellpadding="0" cellspacing="0" class="display">
         <thead>
             <tr>
                 <th>
@@ -67,5 +67,4 @@
         </table>
     </FooterTemplate>
 </asp:Repeater>
-<br />
 </div>
