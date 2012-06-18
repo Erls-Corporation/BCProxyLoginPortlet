@@ -13,7 +13,52 @@
     div#<%=pnlProxyLogin.ClientID %> span, input#<%= btnLogin.ClientID %>  {
         margin-left: 10px;
     }
+	.ui-autocomplete {
+		max-height: 250px;
+		overflow-y: auto;
+		/* prevent horizontal scrollbar */
+		overflow-x: hidden;
+		/* add padding to account for vertical scrollbar */
+		padding-right: 20px;
+	    z-index: 1000 !important;
+	}
 </style>
+<script type="text/javascript">
+    jQuery(function ($) {
+        if ($.ui.version.match(/^1\.8/) != undefined && $('#<%= tbUserName.ClientID %>').length > 0) {
+            $('#<%= tbUserName.ClientID %>').autocomplete({
+                minLength: 2,
+                delay: 100,
+                source: function (request, response) {
+                    $.ajax({
+                        url: '<%= this.ResolveUrl("~/Portlets/CUS/ICS/BCProxyLogin/UserSearch.asmx/FindUser") %>',
+                        success: function (data) {
+                            response(data.d);
+                        },
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        type: "POST",
+                        data: Sys.Serialization.JavaScriptSerializer.serialize({ term: request.term })
+                    });
+                },
+                focus: function (event, ui) {
+                    $('#<%= tbUserName.ClientID %>').val(ui.item.label);
+                    return false;
+                },
+                select: function (event, ui) {
+                    $('#<%= tbUserName.ClientID %>').val(ui.item.userName);
+                    return false;
+                }
+            })
+                    .data("autocomplete")._renderItem = function (ul, item) {
+                        return $("<li></li>")
+                            .data("item.autocomplete", item)
+                            .append("<a>" + item.text + " - " + item.userName + "</a>")
+                            .appendTo(ul);
+                    };
+        }
+    });
+</script>
 <asp:Panel ID="pnlProxyLogin" runat="server" Visible="false">
     <div class="sideSection">
         <h2>

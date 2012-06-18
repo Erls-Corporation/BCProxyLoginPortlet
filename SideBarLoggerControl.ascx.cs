@@ -14,7 +14,6 @@ namespace BCProxyLogin
     public partial class SideBarLoggerControl : PortalUserControlBase
     {
         private IPortletTemplateFacade _portletTemplateFacade;
-        private BCProxyLogin _bcProxyLogin;
         private PortletTemplate _portletTemplate;
         private readonly bool _requirePassword = ConfigSettings.GetConfigBoolean("C_PortletSettings", "CUS_BC_PL_ENABLE_PW");
         private readonly bool _logIPAddress = ConfigSettings.GetConfigBoolean("C_PortletSettings", "CUS_BC_PL_LOG_IP");
@@ -22,11 +21,10 @@ namespace BCProxyLogin
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            _portletTemplateFacade = Jenzabar.Common.ObjectFactoryWrapper.GetInstance<IPortletTemplateFacade>();
+            _portletTemplateFacade = ObjectFactoryWrapper.GetInstance<IPortletTemplateFacade>();
             _portletTemplate = _portletTemplateFacade.FindByName("[CUS] BCProxyLogin");
             if (_portletTemplate.AccessCheck("CanAccess") && _portletTemplate.AccessCheck("CanViewSideBarControl") && HttpContext.Current.Session["ProxyLoginOriginalUser"] == null)
             {
-                _bcProxyLogin = new BCProxyLogin();
                 pnlProxyLogin.Visible = true;
                 
                 if (_requirePassword)
@@ -38,17 +36,17 @@ namespace BCProxyLogin
         {
             if (String.Empty == tbReason.Text.Trim())
             {
-                divmessage.InnerHtml = Globalizer.GetGlobalizedString("CUS_BC_PL_REQUIRED_REASON").ToString();
+                divmessage.InnerHtml = Globalizer.GetGlobalizedString("CUS_BC_PL_REQUIRED_REASON");
                 divmessage.Visible = true;
             }
             else if (_requirePassword && !ValidPassword())
             {
-                divmessage.InnerHtml = Globalizer.GetGlobalizedString("CUS_BC_PL_INVALID_PW").ToString();
+                divmessage.InnerHtml = Globalizer.GetGlobalizedString("CUS_BC_PL_INVALID_PW");
                 divmessage.Visible = true;
                 if (_logFailures)
                 {
                     var user = getPortalUserByUserName(tbUserName.Text);
-                    LogAction(Globalizer.GetGlobalizedString("CUS_BC_PL_INVALID_PW").ToString(), user.ID);
+                    LogAction(Globalizer.GetGlobalizedString("CUS_BC_PL_INVALID_PW"), user.ID);
                 }
             }
             else
@@ -70,11 +68,11 @@ namespace BCProxyLogin
                 if (roleCheck.success)
                 {
 
-                    if (LogAction(tbReason.Text.ToString(), user.ID))
+                    if (LogAction(tbReason.Text, user.ID))
                     {
-                        string currentUser = PortalUser.Current.Username;
+                        var currentUser = PortalUser.Current.Username;
                         HttpContext.Current.Session.Clear();
-                        this.PortalGlobal.Login(user.Username, String.Empty);
+                        PortalGlobal.Login(user.Username, String.Empty);
                         HttpContext.Current.Session["file_access"] = new StringDictionary(); // UploadFile doesn't check to see if there is a valid StringDictionary here, and does a cast.  This causes a unhandled exception that bubbles up to a YSOD
                         HttpContext.Current.Session["ProxyLoginOriginalUser"] = currentUser;
                         HttpContext.Current.Session["ProxyLoginDontRedirect"] = true;
@@ -91,7 +89,7 @@ namespace BCProxyLogin
             }
             else
             {
-                divmessage.InnerHtml = Globalizer.GetGlobalizedString("CUS_BC_PL_USER_NOT_FOUND").ToString();
+                divmessage.InnerHtml = Globalizer.GetGlobalizedString("CUS_BC_PL_USER_NOT_FOUND");
                 divmessage.Visible = true;
             }
         }
@@ -119,7 +117,7 @@ namespace BCProxyLogin
 
         private bool ValidPassword()
         {
-            return this.PortalGlobal.IsLoginValid(PortalUser.Current.Username, tbPassword.Text) == Jenzabar.Portal.Framework.Web.LoginResult.Valid;
+            return PortalGlobal.IsLoginValid(PortalUser.Current.Username, tbPassword.Text) == Jenzabar.Portal.Framework.Web.LoginResult.Valid;
         }
 
         internal bool LogAction(String reason, Guid userId)
@@ -137,9 +135,9 @@ namespace BCProxyLogin
             catch (Exception ex)
             {
                 if (PortalUser.Current.IsSiteAdmin)
-                    divError.InnerHtml = Globalizer.GetGlobalizedString("CUS_BC_PL_ERROR_ADMIN").ToString() + ex;
+                    divError.InnerHtml = Globalizer.GetGlobalizedString("CUS_BC_PL_ERROR_ADMIN") + ex;
                 else
-                    divError.InnerHtml = Globalizer.GetGlobalizedString("CUS_BC_PL_ERROR_USER").ToString();
+                    divError.InnerHtml = Globalizer.GetGlobalizedString("CUS_BC_PL_ERROR_USER");
 
                 divError.Visible = true;
                 return false;
