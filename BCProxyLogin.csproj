@@ -108,17 +108,11 @@
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AjaxControlToolkit">
-      <HintPath>V:\Program Files\Jenzabar\ICS.NET\Portal\bin\AjaxControlToolkit.dll</HintPath>
-    </Reference>
     <Reference Include="BCNHibernate">
       <HintPath>V:\Program Files\Jenzabar\ICS.NET\Portal\bin\BCNHibernate.dll</HintPath>
     </Reference>
     <Reference Include="Jenzabar.Common">
       <HintPath>..\..\..\..\bin\Jenzabar.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="Jenzabar.ICS">
-      <HintPath>..\..\..\..\bin\Jenzabar.ICS.dll</HintPath>
     </Reference>
     <Reference Include="Jenzabar.Portal.Framework">
       <HintPath>..\..\..\..\bin\Jenzabar.Portal.Framework.dll</HintPath>
@@ -138,11 +132,7 @@
     <Reference Include="System.Data">
       <Name>System.Data</Name>
     </Reference>
-    <Reference Include="System.Drawing">
-      <Name>System.Drawing</Name>
-    </Reference>
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Web">
       <Name>System.Web</Name>
     </Reference>
