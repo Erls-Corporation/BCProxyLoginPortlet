@@ -9,7 +9,7 @@
 		overflow-x: hidden;
 		/* add padding to account for vertical scrollbar */
 		padding-right: 20px;
-		max-width: 
+	    z-index: 1000 !important;
 	}
 </style>
 <script type="text/javascript">
@@ -17,12 +17,11 @@
         if ($.ui.version.match(/^1\.8/) != undefined) {
             $('#<%= tbUserName.ClientID %>').autocomplete({
                 minLength: 2,
-                delay: 1000,
+                delay: 100,
                 source: function (request, response) {
                     $.ajax({
                         url: '<%= this.ResolveUrl("~/Portlets/CUS/ICS/BCProxyLogin/UserSearch.asmx/FindUser") %>',
                         success: function (data) {
-                            $('#<%= hdnSearching.ClientID %>').hide();
                             response(data.d);
                         },
                         dataType: "json",
@@ -38,11 +37,6 @@
                 select: function (event, ui) {
                     $('#<%= tbUserName.ClientID %>').val(ui.item.userName);
                     return false;
-                },
-                search: function (event, ui) {
-                    if (event.target.value.match(/^\d+\s+$/) != undefined)
-                        return false;
-                    $('#<%= hdnSearching.ClientID %>').show();
                 }
             })
                     .data("autocomplete")._renderItem = function (ul, item) {
@@ -60,7 +54,6 @@
             <td><asp:Label ID="lblUserName" runat="server"></asp:Label></td>
             <td>
                 <asp:TextBox ID="tbUserName" runat="server"></asp:TextBox>
-                <asp:Label ID="hdnSearching" runat="server" Text="Searching..." CssClass="hidden" />
             </td>
         </tr>
         <asp:Panel ID="pnlPassword" runat="server" Visible="false">
