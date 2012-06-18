@@ -1,18 +1,11 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Services;
-using System.Web.Services.Protocols;
-using System.Runtime.Serialization.Json;
 using System.Runtime.Serialization;
-using AjaxControlToolkit;
 using Jenzabar.Portal.Framework;
 using Jenzabar.Portal.Framework.Facade;
 using StructureMap;
-using System.Text;
-using System.Web.Script.Services;
 
 namespace BCProxyLogin
 {
@@ -23,21 +16,19 @@ namespace BCProxyLogin
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.Web.Script.Services.ScriptService]
     [System.ComponentModel.ToolboxItem(false)]
-    public class UserSearch : System.Web.Services.WebService
+    public class UserSearch : WebService
     {
         [WebMethod(EnableSession = true)]
         public List<Student> FindUser(string term)
         {
-            Guid portletID = new Guid(this.Session["BCPLID"].ToString());
-            IPortletFacade portletFacade = ObjectFactory.GetInstance<IPortletFacade>();
-            Portlet portlet = portletFacade.FindByGuid(portletID);
-            List<Student> stuList = new List<Student>();
+            var portlet = PortletTemplate.FindByName("[CUS] BCProxyLogin");
+            var stuList = new List<Student>();
 
-            int userID = 0;
+            int userID;
             if (Int32.TryParse(term, out userID))
             {
-                IPortalUserFacade puFacade = ObjectFactory.GetInstance<IPortalUserFacade>();
-                PortalUser pu = puFacade.FindByHostID(term.PadLeft(11,'0'));
+                var puFacade = ObjectFactory.GetInstance<IPortalUserFacade>();
+                var pu = puFacade.FindByHostID(term.PadLeft(11,'0'));
                 if ((portlet.AccessCheck("CanProxyStudent") && pu.IsMemberOf(PortalGroup.Students)) ||
                     (portlet.AccessCheck("CanProxyStaff") && pu.IsMemberOf(PortalGroup.Staff)) ||
                     (portlet.AccessCheck("CanProxyFaculty") && pu.IsMemberOf(PortalGroup.Faculty)) ||
@@ -49,33 +40,28 @@ namespace BCProxyLogin
             }
             else
             {
-                List<PortalGroup> Groups = new List<PortalGroup>();
+                var groups = new List<PortalGroup>();
                 if (portlet.AccessCheck("CanProxyStudent"))
-                    Groups.Add(PortalGroup.Students);
+                    groups.Add(PortalGroup.Students);
 
                 if (portlet.AccessCheck("CanProxyStaff"))
-                    Groups.Add(PortalGroup.Staff);
+                    groups.Add(PortalGroup.Staff);
 
                 if (portlet.AccessCheck("CanProxyFaculty"))
-                    Groups.Add(PortalGroup.Faculty);
+                    groups.Add(PortalGroup.Faculty);
 
                 if (portlet.AccessCheck("CanProxyCandidate"))
-                    Groups.Add(PortalGroup.FindByStatusCode("CAN"));
+                    groups.Add(PortalGroup.FindByStatusCode("CAN"));
 
                 if (portlet.AccessCheck("CanProxyConstituent"))
-                    Groups.Add(PortalGroup.FindByStatusCode("ALM"));
+                    groups.Add(PortalGroup.FindByStatusCode("ALM"));
 
-                if (Groups.Count == 0)
+                if (groups.Count == 0)
                     return new List<Student>();
 
-                IPortalUserFacade userFacade = ObjectFactory.GetInstance<IPortalUserFacade>();
-                PortalUserSearch puSearch = new PortalUserSearch(false, 0, 500);
-                puSearch.MainCritetia = new PortalUserSearchCriteria(Groups.ToArray(), "", term, UserProfileType.All, false);
+                var userFacade = ObjectFactory.GetInstance<IPortalUserFacade>();
 
-                foreach (PortalUser user in userFacade.FindBySearch(puSearch))
-                {
-                    stuList.Add(new Student(user.FirstName, user.LastName, Convert.ToInt32(user.HostID), user.Username));
-                }
+                stuList.AddRange(userFacade.PartialFind(term, 100, "", groups.Select(x => x.DN).ToArray()).Select(user => new Student(user.FirstName, user.LastName, Convert.ToInt32(user.HostID), user.Username)));
             }
             return stuList;
 
