@@ -45,6 +45,7 @@
     <IsWebBootstrapper>true</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <UseIISExpress>false</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Portal-dev|AnyCPU' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -112,16 +113,13 @@
       <HintPath>V:\Program Files\Jenzabar\ICS.NET\Portal\bin\BCNHibernate.dll</HintPath>
     </Reference>
     <Reference Include="Jenzabar.Common">
-      <HintPath>..\..\..\..\bin\Jenzabar.Common.dll</HintPath>
+      <HintPath>V:\Program Files\Jenzabar\ICS.NET\Portal\bin\Jenzabar.Common.dll</HintPath>
     </Reference>
     <Reference Include="Jenzabar.Portal.Framework">
-      <HintPath>..\..\..\..\bin\Jenzabar.Portal.Framework.dll</HintPath>
+      <HintPath>V:\Program Files\Jenzabar\ICS.NET\Portal\bin\Jenzabar.Portal.Framework.dll</HintPath>
     </Reference>
     <Reference Include="Jenzabar.Portal.Framework.Web">
-      <HintPath>..\..\..\..\bin\Jenzabar.Portal.Framework.Web.dll</HintPath>
-    </Reference>
-    <Reference Include="StructureMap">
-      <HintPath>..\..\..\..\bin\StructureMap.dll</HintPath>
+      <HintPath>V:\Program Files\Jenzabar\ICS.NET\Portal\bin\Jenzabar.Portal.Framework.Web.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Name>System</Name>

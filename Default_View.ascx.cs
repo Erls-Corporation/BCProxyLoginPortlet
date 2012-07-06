@@ -20,25 +20,24 @@ namespace BCProxyLogin
         private readonly bool _logIpAddress = ConfigSettings.GetConfigBoolean("C_PortletSettings", "CUS_BC_PL_LOG_IP");
         private readonly bool _logFailures = ConfigSettings.GetConfigBoolean("C_PortletSettings", "CUS_BC_PL_LOG_FAILURES");
 
-		protected void Page_Load(object sender, System.EventArgs e)
+		protected void Page_Load(object sender, EventArgs e)
 		{
-            if (this.IsFirstLoad) 
-			{
-                lblReason.Text = Globalizer.GetGlobalizedString("CUS_BC_PL_REASON_LABEL_TEXT");
-                lblUserName.Text = Globalizer.GetGlobalizedString("CUS_BC_PL_USERNAME_LABEL_TEXT");
-                lblPassword.Text = Globalizer.GetGlobalizedString("CUS_BC_PL_PASSWORD_LABEL_TEXT");
+		    if (!IsFirstLoad) return;
 
-                if (_requirePassword)
-                    pnlPassword.Visible = true;
+		    lblReason.Text = Globalizer.GetGlobalizedString("CUS_BC_PL_REASON_LABEL_TEXT");
+		    lblUserName.Text = Globalizer.GetGlobalizedString("CUS_BC_PL_USERNAME_LABEL_TEXT");
+		    lblPassword.Text = Globalizer.GetGlobalizedString("CUS_BC_PL_PASSWORD_LABEL_TEXT");
 
-                if (Session["reloginCommand"] != null)
-                {
-                    string[] args = Session["reloginCommand"].ToString().Split('|');
-                    tbUserName.Text = args[0];
-                    tbReason.Text = args[1];
-                    Session.Remove("reloginCommand");
-                }
-			}
+		    if (_requirePassword)
+		        pnlPassword.Visible = true;
+
+		    if (Session["reloginCommand"] != null)
+		    {
+		        var args = Session["reloginCommand"].ToString().Split('|');
+		        tbUserName.Text = args[0];
+		        tbReason.Text = args[1];
+		        Session.Remove("reloginCommand");
+		    }
 		}
 
 		#region Web Form Designer generated code
@@ -61,19 +60,19 @@ namespace BCProxyLogin
 		}
 		#endregion
 
-        protected void btnLogin_Click(object sender, EventArgs e)
+        protected void BtnLoginClick(object sender, EventArgs e)
         {
             if (String.Empty == tbReason.Text.Trim())
             {
-                this.ParentPortlet.ShowFeedback(FeedbackType.Message, Globalizer.GetGlobalizedString("CUS_BC_PL_REQUIRED_REASON").ToString());
+                ParentPortlet.ShowFeedback(FeedbackType.Message, Globalizer.GetGlobalizedString("CUS_BC_PL_REQUIRED_REASON"));
             }
-            else if (_requirePassword && !validPassword())
+            else if (_requirePassword && !ValidPassword())
             {
-                this.ParentPortlet.ShowFeedback(FeedbackType.Message, Globalizer.GetGlobalizedString("CUS_BC_PL_INVALID_PW").ToString());
+                ParentPortlet.ShowFeedback(FeedbackType.Message, Globalizer.GetGlobalizedString("CUS_BC_PL_INVALID_PW"));
                 if(_logFailures)
                 {
                     var user = getPortalUserByUserName(tbUserName.Text);
-                    LogAction(Globalizer.GetGlobalizedString("CUS_BC_PL_INVALID_PW").ToString(), user.ID);
+                    LogAction(Globalizer.GetGlobalizedString("CUS_BC_PL_INVALID_PW"), user.ID);
                 }
             }
             else
@@ -83,15 +82,12 @@ namespace BCProxyLogin
             
         }
 
-        private bool validPassword()
+        private bool ValidPassword()
         {
-            if (this.PortalGlobal.IsLoginValid(PortalUser.Current.Username, tbPassword.Text) == Jenzabar.Portal.Framework.Web.LoginResult.Valid)
-                return true;
-            else
-                return false;
+            return PortalGlobal.IsLoginValid(PortalUser.Current.Username, tbPassword.Text) == Jenzabar.Portal.Framework.Web.LoginResult.Valid;
         }
 
-        private void PerformLogin()
+	    private void PerformLogin()
         {
             var username = tbUserName.Text;
 
@@ -99,31 +95,31 @@ namespace BCProxyLogin
             
             if (user != null)
             {
-                Check roleCheck = BCProxyLogin.RoleCheck(user, this.ParentPortlet.Portlet.PortletTemplate);
+                var roleCheck = BCProxyLogin.RoleCheck(user, ParentPortlet.Portlet.PortletTemplate);
                 if (roleCheck.success)
                 {
 
-                    if (LogAction(tbReason.Text.ToString(), user.ID))
+                    if (LogAction(tbReason.Text, user.ID))
                     {
-                        String currentUser = PortalUser.Current.Username;
+                        var currentUser = PortalUser.Current.Username;
                         HttpContext.Current.Session.Clear();
                         HttpContext.Current.Session["file_access"] = new StringDictionary();// UploadFile doesn't check to see if there is a valid StringDictionary here, and does a cast.  This causes a unhandled exception that bubbles up to a YSOD
                         
-                        this.PortalGlobal.Login(user.Username, String.Empty);
+                        PortalGlobal.Login(user.Username, String.Empty);
                         HttpContext.Current.Session["ProxyLoginOriginalUser"] = currentUser;
                         BCProxyLogin.RedirectUrl(Response);
                     }
                 }
                 else
                 {
-                    this.ParentPortlet.ShowFeedback(FeedbackType.Message, roleCheck.reason);
+                    ParentPortlet.ShowFeedback(FeedbackType.Message, roleCheck.reason);
                     if (_logFailures)
                         LogAction(roleCheck.reason, user.ID);
                 }
             }
             else
             {
-                this.ParentPortlet.ShowFeedback(FeedbackType.Message, Globalizer.GetGlobalizedString("CUS_BC_PL_USER_NOT_FOUND").ToString());
+                ParentPortlet.ShowFeedback(FeedbackType.Message, Globalizer.GetGlobalizedString("CUS_BC_PL_USER_NOT_FOUND"));
             }
         }
 
@@ -157,15 +153,15 @@ namespace BCProxyLogin
                 if (_logIpAddress)
                     reason = reason + " (" + Request.UserHostAddress + ")";
                 
-                logger.AddLog(this.ParentPortlet.Portlet.PortletTemplate.ID.AsGuid, PortalUser.Current.ID.AsGuid, userId, reason, DateTime.Now);
+                logger.AddLog(ParentPortlet.Portlet.PortletTemplate.ID.AsGuid, PortalUser.Current.ID.AsGuid, userId, reason, DateTime.Now);
                 return true;
             }
             catch (Exception ex)
             {
                 if (PortalUser.Current.IsSiteAdmin)
-                    this.ParentPortlet.ShowFeedback(FeedbackType.Error, Globalizer.GetGlobalizedString("CUS_BC_PL_ERROR_ADMIN").ToString() + ex);
+                    ParentPortlet.ShowFeedback(FeedbackType.Error, Globalizer.GetGlobalizedString("CUS_BC_PL_ERROR_ADMIN") + ex);
                 else
-                    this.ParentPortlet.ShowFeedback(FeedbackType.Error, Globalizer.GetGlobalizedString("CUS_BC_PL_ERROR_USER").ToString());
+                    ParentPortlet.ShowFeedback(FeedbackType.Error, Globalizer.GetGlobalizedString("CUS_BC_PL_ERROR_USER"));
 
                 return false;
             }

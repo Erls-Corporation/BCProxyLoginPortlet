@@ -1,6 +1,5 @@
 <%@ Control Language="c#" AutoEventWireup="True" CodeBehind="Default_View.ascx.cs"
     Inherits="BCProxyLogin.Default_View" TargetSchema="" %>
-<%@ Register TagPrefix="common" Assembly="Jenzabar.Common" Namespace="Jenzabar.Common.Web.UI.Controls" %>
 <style type="text/css">
 	.ui-autocomplete {
 		max-height: 250px;
@@ -20,7 +19,7 @@
                 delay: 100,
                 source: function (request, response) {
                     $.ajax({
-                        url: '<%= this.ResolveUrl("~/Portlets/CUS/ICS/BCProxyLogin/UserSearch.asmx/FindUser") %>',
+                        url: '<%= ResolveUrl("~/Portlets/CUS/ICS/BCProxyLogin/UserSearch.asmx/FindUser") %>',
                         success: function (data) {
                             response(data.d);
                         },
@@ -67,7 +66,7 @@
             <td><asp:TextBox ID="tbReason" runat="server"></asp:TextBox></td>
         </tr>
         <tr>
-            <td colspan="2" align="center"><asp:Button ID="btnLogin" runat="server" Text="Login" OnClick="btnLogin_Click" /></td>
+            <td colspan="2" align="center"><asp:Button ID="btnLogin" runat="server" Text="Login" OnClick="BtnLoginClick" /></td>
         </tr>
     </table>
 </div>

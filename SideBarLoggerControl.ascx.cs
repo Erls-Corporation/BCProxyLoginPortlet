@@ -16,7 +16,7 @@ namespace BCProxyLogin
         private IPortletTemplateFacade _portletTemplateFacade;
         private PortletTemplate _portletTemplate;
         private readonly bool _requirePassword = ConfigSettings.GetConfigBoolean("C_PortletSettings", "CUS_BC_PL_ENABLE_PW");
-        private readonly bool _logIPAddress = ConfigSettings.GetConfigBoolean("C_PortletSettings", "CUS_BC_PL_LOG_IP");
+        private readonly bool _logIpAddress = ConfigSettings.GetConfigBoolean("C_PortletSettings", "CUS_BC_PL_LOG_IP");
         private readonly bool _logFailures = ConfigSettings.GetConfigBoolean("C_PortletSettings", "CUS_BC_PL_LOG_FAILURES");
 
         protected void Page_Load(object sender, EventArgs e)
@@ -126,7 +126,7 @@ namespace BCProxyLogin
             {
                 var logger = new BCLoggerMapperService();
                 
-                if (_logIPAddress)
+                if (_logIpAddress)
                     reason = reason + " (" + Request.UserHostAddress + ")";
 
                 logger.AddLog(_portletTemplate.ID.AsGuid, PortalUser.Current.ID.AsGuid, userId, reason, DateTime.Now);

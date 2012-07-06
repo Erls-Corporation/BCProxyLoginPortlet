@@ -1,13 +1,13 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Logs_View.ascx.cs" Inherits="BCProxyLogin.Logs_View" %>
 <%@ Import Namespace="System.Data" %>
 
-<link href="<%= this.ResolveUrl("~/ClientConfig/css/jqueryDataTable.css") %>" rel="stylesheet"
+<link href="<%= ResolveUrl("~/ClientConfig/css/jqueryDataTable.css") %>" rel="stylesheet"
     type="text/css" />
 <script type="text/javascript">
 
     jQuery(function($) {
         if ($.fn.dataTableExt == undefined) {
-            $.getScript('<%= this.ResolveUrl("~/ClientConfig/js/jquery.dataTables.min.js") %>', function() {
+            $.getScript('<%= ResolveUrl("~/ClientConfig/js/jquery.dataTables.min.js") %>', function() {
                 LoadTable();
             });
         } else {
@@ -33,7 +33,7 @@
 <br />
 <br />
 <asp:Repeater ID="rptLogList" runat="server" 
-    onitemdatabound="rptLogList_ItemDataBound">
+    onitemdatabound="RptLogListItemDataBound">
     <HeaderTemplate>
         <table id="logList" cellpadding="0" cellspacing="0" class="display">
         <thead>

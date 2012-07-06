@@ -22,17 +22,17 @@ namespace BCProxyLogin
         override protected void OnInit(EventArgs e)
         {
             InitializeComponent();
-            this.Load += new System.EventHandler(this.Page_Load);
+            Load += Page_Load;
             base.OnInit(e);
         }
 
         private void InitializeComponent()
         {
-            lnbLogback.Click += new EventHandler(lnbLogback_Click);
-            lnbRelog.Click += new EventHandler(lnbRelog_Click);
+            lnbLogback.Click += LnbLogbackClick;
+            lnbRelog.Click += LnbRelogClick;
         }
 
-        void lnbRelog_Click(object sender, EventArgs e)
+        void LnbRelogClick(object sender, EventArgs e)
         {
             var originalUser = HttpContext.Current.Session["ProxyLoginOriginalUser"].ToString();
             var dontRedirect = HttpContext.Current.Session["ProxyLoginDontRedirect"];
@@ -40,19 +40,19 @@ namespace BCProxyLogin
             HttpContext.Current.Session["ProxyLoginDontRedirect"] = dontRedirect;
             HttpContext.Current.Session["ProxyLoginOriginalUser"] = originalUser;
             HttpContext.Current.Session["file_access"] = new StringDictionary();// UploadFile doesn't check to see if there is a valid StringDictionary here, and does a cast.  This causes a unhandled exception that bubbles up to a YSOD
-            this.PortalGlobal.Login(PortalUser.Current.Username, String.Empty);
+            PortalGlobal.Login(PortalUser.Current.Username, String.Empty);
             if (dontRedirect == null)
                 RedirectUrl();
             
         }
 
-        void lnbLogback_Click(object sender, EventArgs e)
+        void LnbLogbackClick(object sender, EventArgs e)
         {
-            String originalUser = HttpContext.Current.Session["ProxyLoginOriginalUser"].ToString();
+            var originalUser = HttpContext.Current.Session["ProxyLoginOriginalUser"].ToString();
             var dontRedirect = HttpContext.Current.Session["ProxyLoginDontRedirect"];
             HttpContext.Current.Session.Clear();
             HttpContext.Current.Session["file_access"] = new StringDictionary();// UploadFile doesn't check to see if there is a valid StringDictionary here, and does a cast.  This causes a unhandled exception that bubbles up to a YSOD
-            this.PortalGlobal.Login(originalUser, String.Empty);
+            PortalGlobal.Login(originalUser, String.Empty);
 
             if (dontRedirect == null)
                 RedirectUrl();
