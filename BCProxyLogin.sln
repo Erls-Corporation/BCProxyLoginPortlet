@@ -1,6 +1,8 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BCProxyLogin", "BCProxyLogin.csproj", "{FAA706A6-F496-483E-9710-1451AE15FB27}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Portlet.BCProxyLogin", "Portlet.BCProxyLogin\Portlet.BCProxyLogin.csproj", "{FAA706A6-F496-483E-9710-1451AE15FB27}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Go.BCProxyLogin", "Go.BCProxyLogin\Go.BCProxyLogin.csproj", "{DAC84122-B749-4036-98DE-388BC473FA1C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,6 +20,14 @@ Global
 		{FAA706A6-F496-483E-9710-1451AE15FB27}.Portal|Any CPU.Build.0 = Portal|Any CPU
 		{FAA706A6-F496-483E-9710-1451AE15FB27}.Portal-dev|Any CPU.ActiveCfg = Portal-dev|Any CPU
 		{FAA706A6-F496-483E-9710-1451AE15FB27}.Portal-dev|Any CPU.Build.0 = Portal-dev|Any CPU
+		{DAC84122-B749-4036-98DE-388BC473FA1C}.Dist|Any CPU.ActiveCfg = Dist|Any CPU
+		{DAC84122-B749-4036-98DE-388BC473FA1C}.Dist|Any CPU.Build.0 = Dist|Any CPU
+		{DAC84122-B749-4036-98DE-388BC473FA1C}.None|Any CPU.ActiveCfg = None|Any CPU
+		{DAC84122-B749-4036-98DE-388BC473FA1C}.None|Any CPU.Build.0 = None|Any CPU
+		{DAC84122-B749-4036-98DE-388BC473FA1C}.Portal|Any CPU.ActiveCfg = Portal|Any CPU
+		{DAC84122-B749-4036-98DE-388BC473FA1C}.Portal|Any CPU.Build.0 = Portal|Any CPU
+		{DAC84122-B749-4036-98DE-388BC473FA1C}.Portal-dev|Any CPU.ActiveCfg = Portal-dev|Any CPU
+		{DAC84122-B749-4036-98DE-388BC473FA1C}.Portal-dev|Any CPU.Build.0 = Portal-dev|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
