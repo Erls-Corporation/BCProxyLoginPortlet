@@ -4,17 +4,17 @@ namespace BCProxyLogin
 {
     public class Check : Object
     {
-        public bool success { get; set; }
-        public string reason { get; set; }
+        public bool Success { get; set; }
+        public string Reason { get; set; }
 
         public Check(bool success, string reason)
         {
-            this.success = success;
-            this.reason = reason;
+            Success = success;
+            Reason = reason;
         }
         public Check(bool success)
         {
-            this.success = success;
+            Success = success;
         }
     }
 }

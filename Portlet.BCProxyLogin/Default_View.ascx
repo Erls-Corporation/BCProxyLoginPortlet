@@ -34,14 +34,14 @@
                     return false;
                 },
                 select: function (event, ui) {
-                    $('#<%= tbUserName.ClientID %>').val(ui.item.userName);
+                    $('#<%= tbUserName.ClientID %>').val(ui.item.UserName);
                     return false;
                 }
             })
                     .data("autocomplete")._renderItem = function (ul, item) {
                         return $("<li></li>")
                             .data("item.autocomplete", item)
-                            .append("<a>" + item.text + " - " + item.userName + "</a>")
+                            .append("<a>" + item.Text + " - " + item.UserName + "</a>")
                             .appendTo(ul);
                     };
         }

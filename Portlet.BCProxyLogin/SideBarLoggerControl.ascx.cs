@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Specialized;
 using System.Web;
-using BCNHibernate;
+using BCProxyLogin.Entities;
 using Jenzabar.Common.Configuration;
 using Jenzabar.Common.Globalization;
 using Jenzabar.Portal.Framework;
@@ -64,8 +64,8 @@ namespace BCProxyLogin
 
             if (user != null)
             {
-                Check roleCheck = BCProxyLogin.RoleCheck(user, _portletTemplate);
-                if (roleCheck.success)
+                var roleCheck = BCProxyLogin.RoleCheck(user, _portletTemplate);
+                if (roleCheck.Success)
                 {
 
                     if (LogAction(tbReason.Text, user.ID))
@@ -80,10 +80,10 @@ namespace BCProxyLogin
                 }
                 else
                 {
-                    divmessage.InnerHtml = roleCheck.reason;
+                    divmessage.InnerHtml = roleCheck.Reason;
                     divmessage.Visible = true;
                     if (_logFailures)
-                        LogAction(roleCheck.reason, user.ID);
+                        LogAction(roleCheck.Reason, user.ID);
 
                 }
             }

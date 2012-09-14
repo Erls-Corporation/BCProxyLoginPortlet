@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
-using BCNHibernate;
 using System.Data;
 using System.Web.UI.WebControls;
+using BCProxyLogin.Entities;
 using Jenzabar.Common;
 using Jenzabar.Portal.Framework.Web.UI;
 using Jenzabar.Common.Configuration;

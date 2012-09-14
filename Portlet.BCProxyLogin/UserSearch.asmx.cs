@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Services;
 using System.Runtime.Serialization;
+using Jenzabar.Common;
 using Jenzabar.Portal.Framework;
 using Jenzabar.Portal.Framework.Facade;
-using StructureMap;
 
 namespace BCProxyLogin
 {
@@ -24,10 +24,10 @@ namespace BCProxyLogin
             var portlet = PortletTemplate.FindByName("[CUS] BCProxyLogin");
             var stuList = new List<Student>();
 
-            int userID;
-            if (Int32.TryParse(term, out userID))
+            int userId;
+            if (Int32.TryParse(term, out userId))
             {
-                var puFacade = ObjectFactory.GetInstance<IPortalUserFacade>();
+                var puFacade = ObjectFactoryWrapper.GetInstance<IPortalUserFacade>();
                 var pu = puFacade.FindByHostID(term.PadLeft(11,'0'));
                 if ((portlet.AccessCheck("CanProxyStudent") && pu.IsMemberOf(PortalGroup.Students)) ||
                     (portlet.AccessCheck("CanProxyStaff") && pu.IsMemberOf(PortalGroup.Staff)) ||
@@ -59,7 +59,7 @@ namespace BCProxyLogin
                 if (groups.Count == 0)
                     return new List<Student>();
 
-                var userFacade = ObjectFactory.GetInstance<IPortalUserFacade>();
+                var userFacade = ObjectFactoryWrapper.GetInstance<IPortalUserFacade>();
 
                 stuList.AddRange(userFacade.PartialFind(term, 100, "", groups.Select(x => x.DN).ToArray()).Select(user => new Student(user.FirstName, user.LastName, Convert.ToInt32(user.HostID), user.Username)));
             }
@@ -71,29 +71,29 @@ namespace BCProxyLogin
         public class Student
         {
             [DataMember]
-            public String firstName { get; set; }
+            public String FirstName { get; set; }
 
             [DataMember]
-            public String lastName { get; set; }
+            public String LastName { get; set; }
 
             [DataMember]
-            public Int32 hostId { get; set; }
+            public Int32 HostId { get; set; }
 
             [DataMember]
-            public String text { get; set; }
+            public String Text { get; set; }
 
             [DataMember]
-            public String userName { get; set; }
+            public String UserName { get; set; }
 
             public Student() { }
 
             public Student(String firstName, String lastName, Int32 hostId, String userName)
             {
-                this.firstName = firstName;
-                this.lastName = lastName;
-                this.hostId = hostId;
-                this.text = lastName + ", " + firstName + " - " + hostId;
-                this.userName = userName;
+                FirstName = firstName;
+                LastName = lastName;
+                HostId = hostId;
+                Text = lastName + ", " + firstName + " - " + hostId;
+                UserName = userName;
             }
 
         }

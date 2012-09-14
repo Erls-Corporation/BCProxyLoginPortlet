@@ -93,7 +93,12 @@
     </Content>
     <Content Include="Views\Web.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Portlet.BCProxyLogin\Portlet.BCProxyLogin.csproj">
+      <Project>{FAA706A6-F496-483E-9710-1451AE15FB27}</Project>
+      <Name>Portlet.BCProxyLogin</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Views\BCProxyLogin\Index.cshtml" />
   </ItemGroup>
@@ -185,6 +190,9 @@ goto :exit
 
 RMDIR "$(ProjectDir)bin" /S /Q
 RMDIR "$(ProjectDir)obj" /S /Q
+
+RMDIR /S /Q "$(SolutionDir)/Portlet.BCProxyLogin/bin"
+RMDIR /S /Q "$(SolutionDir)/Portlet.BCProxyLogin/obj" 
 
 :exit</PostBuildEvent>
   </PropertyGroup>
