@@ -212,7 +212,8 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>cd $(TargetDir)
-rd /S /Q "$(TargetDir)Portal"</PreBuildEvent>
+rd /S /Q "$(TargetDir)Portal"
+rd /S /Q "$(TargetDir)..\..\..\Compiled\"</PreBuildEvent>
     <PostBuildEvent>cd $(TargetDir)
 md "$(TargetDir)Portal"
 md "$(TargetDir)Portal\bin"

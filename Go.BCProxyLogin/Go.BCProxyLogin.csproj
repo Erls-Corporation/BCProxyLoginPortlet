@@ -142,10 +142,11 @@ md "$(TargetDir)Go"
 md "$(TargetDir)Go\bin"
 md "$(TargetDir)Go\Views"
 
-if "$(ConfigurationName)" == "Portal-dev"  copy "$(TargetName).*" "$(TargetDir)Go\bin\"
-if "$(ConfigurationName)" == "Portal"  copy "$(TargetName).dll" "$(TargetDir)Go\bin\"
-if "$(ConfigurationName)" == "Dist"  copy "$(TargetName).dll" "$(TargetDir)Go\bin\"
+if "$(ConfigurationName)" == "Portal-dev"  copy "$(TargetName).pdb" "$(TargetDir)Go\bin\"
+if "$(ConfigurationName)" == "Portal-dev"  copy "$(SolutionDir)\Portlet.BCProxyLogin\bin\BCProxyLogin.pdb" "$(TargetDir)Go\bin\"
 
+copy "$(TargetName).dll" "$(TargetDir)Go\bin\"
+copy "$(SolutionDir)\Portlet.BCProxyLogin\bin\BCProxyLogin.dll" "$(TargetDir)Go\bin\"
 
 
 cd $(ProjectDir)
