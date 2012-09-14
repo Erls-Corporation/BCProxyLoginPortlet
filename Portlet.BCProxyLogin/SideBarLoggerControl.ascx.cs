@@ -129,8 +129,7 @@ namespace BCProxyLogin
                 if (_logIpAddress)
                     reason = reason + " (" + Request.UserHostAddress + ")";
 
-                logger.AddLog(_portletTemplate.ID.AsGuid, PortalUser.Current.ID.AsGuid, userId, reason, DateTime.Now);
-                return true;
+                return logger.AddLog(_portletTemplate.ID.AsGuid, PortalUser.Current.ID.AsGuid, userId, reason, DateTime.Now);
             }
             catch (Exception ex)
             {

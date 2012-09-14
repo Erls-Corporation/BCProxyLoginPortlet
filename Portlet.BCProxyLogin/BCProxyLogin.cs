@@ -47,7 +47,6 @@ namespace BCProxyLogin
 
     public class BCProxyLogin : SecuredPortletBase
 	{
-
 		protected override PortletViewBase GetCurrentScreen()
 		{
 			switch(CurrentPortletScreenName)

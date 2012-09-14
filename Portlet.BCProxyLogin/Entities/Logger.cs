@@ -64,7 +64,7 @@ namespace BCProxyLogin.Entities
             catch (Exception ex)
             {
                 ExceptionManager.Publish(ex);
-                return false;
+                throw;
             }
         }
     }

@@ -8,7 +8,6 @@ using System.Xml;
 
 namespace BCProxyLogin
 {
-
     public class NHibernateFactory : ICustomSessionFactory
     {
         public ISessionFactory GetSessionFactory()
@@ -18,7 +17,7 @@ namespace BCProxyLogin
             return cfg.BuildSessionFactory();
         }
 
-        private static void SetNHibernateConfigProperties(Configuration cfg)
+        private void SetNHibernateConfigProperties(Configuration cfg)
         {
             var newProperties = new Dictionary<string, string>
                 {

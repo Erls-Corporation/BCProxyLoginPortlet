@@ -36,7 +36,6 @@ namespace BCProxyLogin
             dt.Columns.Add(dc3);
             dt.Columns.Add(dc4);
 
-
             foreach (var log in logger.GetLogs(ParentPortlet.Portlet.PortletTemplate.ID.AsGuid).OrderByDescending(x => x.Time))
             {
                 var dr = dt.NewRow();

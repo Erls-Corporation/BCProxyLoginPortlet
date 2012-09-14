@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" namespace="BCNHibernate.Entities" assembly="BCNHibernate" default-lazy="false">
-    <class name="Logger" table="CUS_BCPortletLogs">
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+    <class name="BCProxyLogin.Entities.Logger, BCProxyLogin" table="CUS_BCPortletLogs">
         <id name="ID" column="LogNumber" type="Guid">
-            <generator class="guid"/>
+            <generator class="guid.comb"/>
         </id>
-        <property name="PortletID" type="Guid" />
+        <property name="PortletId" column="PortletID" type="Guid" />
         <property name="SourceUser" type="Guid" />
         <property name="TargetUser" type="Guid" />
         <property name="Action" type="String" length="255" />
