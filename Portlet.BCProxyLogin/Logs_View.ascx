@@ -1,13 +1,12 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Logs_View.ascx.cs" Inherits="BCProxyLogin.Logs_View" %>
 <%@ Import Namespace="System.Data" %>
 
-<link href="<%= ResolveUrl("~/ClientConfig/css/jqueryDataTable.css") %>" rel="stylesheet"
-    type="text/css" />
+<link href="//ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.3/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
 
     jQuery(function($) {
         if ($.fn.dataTableExt == undefined) {
-            $.getScript('<%= ResolveUrl("~/ClientConfig/js/jquery.dataTables.min.js") %>', function() {
+            $.getScript('//ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.3/jquery.dataTables.min.js', function () {
                 LoadTable();
             });
         } else {
