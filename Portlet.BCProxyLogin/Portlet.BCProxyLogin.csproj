@@ -153,6 +153,7 @@
     <Compile Include="Default_View.ascx.designer.cs">
       <DependentUpon>Default_View.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\RoleChecker.cs" />
     <Compile Include="Logs_View.ascx.cs">
       <DependentUpon>Logs_View.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -206,9 +207,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Helpers\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>cd $(TargetDir)

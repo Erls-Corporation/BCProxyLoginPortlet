@@ -2,6 +2,7 @@ using System;
 using System.Collections.Specialized;
 using System.Web;
 using BCProxyLogin.Entities;
+using BCProxyLogin.Helpers;
 using Jenzabar.Common.Configuration;
 using Jenzabar.Portal.Framework;
 using Jenzabar.Portal.Framework.Web.UI;
@@ -75,6 +76,10 @@ namespace BCProxyLogin
                     LogAction(Globalizer.GetGlobalizedString("CUS_BC_PL_INVALID_PW"), user.ID);
                 }
             }
+            else if (HttpContext.Current.Session["ProxyLoginOriginalUser"] != null)
+            {
+                ParentPortlet.ShowFeedback(FeedbackType.Message, Globalizer.GetGlobalizedString("CUS_BC_PL_ALREADY_PROXIED"));
+            }
             else
             {
                 PerformLogin();
@@ -95,7 +100,7 @@ namespace BCProxyLogin
             
             if (user != null)
             {
-                var roleCheck = BCProxyLogin.RoleCheck(user, ParentPortlet.Portlet.PortletTemplate);
+                var roleCheck = new RoleChecker().RoleCheck(user, ParentPortlet.Portlet.PortletTemplate);
                 if (roleCheck.Success)
                 {
 

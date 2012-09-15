@@ -2,6 +2,7 @@
 using System.Collections.Specialized;
 using System.Web;
 using BCProxyLogin.Entities;
+using BCProxyLogin.Helpers;
 using Jenzabar.Common.Configuration;
 using Jenzabar.Common.Globalization;
 using Jenzabar.Portal.Framework;
@@ -19,12 +20,14 @@ namespace BCProxyLogin
         private readonly bool _logIpAddress = ConfigSettings.GetConfigBoolean("C_PortletSettings", "CUS_BC_PL_LOG_IP");
         private readonly bool _logFailures = ConfigSettings.GetConfigBoolean("C_PortletSettings", "CUS_BC_PL_LOG_FAILURES");
 
+
         protected void Page_Load(object sender, EventArgs e)
         {
             _portletTemplateFacade = ObjectFactoryWrapper.GetInstance<IPortletTemplateFacade>();
             _portletTemplate = _portletTemplateFacade.FindByName("[CUS] BCProxyLogin");
             if (_portletTemplate.AccessCheck("CanAccess") && _portletTemplate.AccessCheck("CanViewSideBarControl") && HttpContext.Current.Session["ProxyLoginOriginalUser"] == null)
             {
+
                 pnlProxyLogin.Visible = true;
                 
                 if (_requirePassword)
@@ -64,7 +67,7 @@ namespace BCProxyLogin
 
             if (user != null)
             {
-                var roleCheck = BCProxyLogin.RoleCheck(user, _portletTemplate);
+                var roleCheck = new RoleChecker().RoleCheck(user, _portletTemplate);
                 if (roleCheck.Success)
                 {
 
