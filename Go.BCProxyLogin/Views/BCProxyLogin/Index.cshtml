@@ -1,5 +1,70 @@
-@model Go.BCProxyLogin.Models.BCProxyLogin
-
+@model Go.BCProxyLogin.Models.Main
+@using mobile.Helpers;
+@using Jenzabar.Common.Globalization
 @{
     Layout = "~/Views/Shared/MainLayout.cshtml";
 }
+
+<script type="text/javascript" language="javascript">
+    $(document).ready(function () {
+        $('#proxyloginmessage').hide();
+
+        $('#sendProxyLogin').bind('click', function () {
+            if ($.trim($('#proxyUsername').val()) == "") {
+                $('#proxyloginmessage').show();
+                $('#proxyloginmessage').html('@Globalizer.GetGlobalizedString("TXT_USER_NAME_IS_REQUIRED")');
+            } else {
+                if ($.trim($('#proxyPassword').val()) == "" && "@(Model.RequiresPassword)" == "True") {
+                    $('#proxyloginmessage').show();
+                    $('#proxyloginmessage').html('@Globalizer.GetGlobalizedString("TXT_PASSWORD_IS_REQUIRED")');
+                } else {
+                    $.mobile.showPageLoadingMsg();
+                    $.ajax({
+                        url: '@Url.Action("CheckCredentials")',
+                        type: 'GET',
+                        data: { username: $('#proxyUsername').val(), password: $('#proxyPassword').val(), reason: $('#proxyReason').val() },
+                        error: function (request, status, error) {
+                            $.mobile.hidePageLoadingMsg();
+                            $('#proxyloginmessage').show();
+                            $('#proxyloginmessage').html(error);
+                        },
+                        success: function (data) {
+                            if ($.trim(data) == "OK") {
+                                window.location.replace('@Url.Home()');
+                            } else {
+                                $.mobile.hidePageLoadingMsg();
+                                $('#proxyloginmessage').show();
+                                $('#proxyloginmessage').html(data);
+                            }
+                        }
+                    });
+                }
+            }
+            return false;
+        });
+
+        $('#proxyUsername,#proxyReason,#proxyPassword').bind('keyup', function (e) {
+            if (e.keyCode == 13) {
+                e.preventDefault();
+                if (!$('#sendProxyLogin').is(':focus')) {
+                    $('#sendProxyLogin').click();
+                }
+                return false;
+            }
+        });
+    });
+</script>
+
+<div id="proxyloginmessage" class="commentError"></div>
+<div data-role="fieldcontain">
+    <label for="proxyUsername">@Globalizer.GetGlobalizedString("CUS_BC_PL_USERNAME_LABEL_TEXT")</label><input id="proxyUsername" name="proxyUsername" type="text" />
+    @if (Model.RequiresPassword)
+    {
+        <label for="proxyPassword">@Globalizer.GetGlobalizedString("CUS_BC_PL_PASSWORD_LABEL_TEXT")</label><input id="proxyPassword" name="proxyPassword" type="password" />
+    }else
+    {
+        <input type="hidden" id='proxyPassword' name="proxyPassword"/>
+    }
+    <label for="proxyReason">@Globalizer.GetGlobalizedString("CUS_BC_PL_REASON_LABEL_TEXT")</label><input id="proxyReason" name="proxyReason" type="text" />
+</div>
+<a id="sendProxyLogin" href="" data-role="button" data-theme="a">@Globalizer.GetGlobalizedString("TXT_LOGIN")</a>
