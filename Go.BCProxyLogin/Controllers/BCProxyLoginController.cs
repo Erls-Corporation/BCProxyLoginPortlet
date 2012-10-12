@@ -4,7 +4,6 @@ using System.Web.Mvc;
 using BCProxyLogin.Helpers;
 using Jenzabar.Common.Configuration;
 using Jenzabar.Common.Globalization;
-using Jenzabar.Portal.Framework;
 using Jenzabar.Portal.Framework.Facade;
 using mobile.Infrastructure.Attributes;
 using mobile.Infrastructure.Security;
