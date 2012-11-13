@@ -108,6 +108,24 @@
     <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Portal-devNoDLLCopy|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <BaseAddress>285212672</BaseAddress>
+    <FileAlignment>4096</FileAlignment>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\BCProxyLogin.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Jenzabar.Common">
       <HintPath>V:\Program Files\Jenzabar\ICS.NET\Portal\bin\Jenzabar.Common.dll</HintPath>
@@ -141,6 +159,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config_View.ascx.cs">
+      <DependentUpon>Config_View.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Config_View.ascx.designer.cs">
+      <DependentUpon>Config_View.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Entities\Logger.cs" />
     <Compile Include="BCProxyLogin.cs">
       <SubType>Code</SubType>
@@ -161,7 +186,21 @@
     <Compile Include="Logs_View.ascx.designer.cs">
       <DependentUpon>Logs_View.ascx</DependentUpon>
     </Compile>
+    <Compile Include="MainView.ascx.cs">
+      <DependentUpon>MainView.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MainView.ascx.designer.cs">
+      <DependentUpon>MainView.ascx</DependentUpon>
+    </Compile>
     <Compile Include="NHibernateFactory.cs" />
+    <Compile Include="Permissions_View.ascx.cs">
+      <DependentUpon>Permissions_View.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Permissions_View.ascx.designer.cs">
+      <DependentUpon>Permissions_View.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Relogger.ascx.cs">
       <DependentUpon>Relogger.ascx</DependentUpon>
@@ -170,6 +209,19 @@
     <Compile Include="Relogger.ascx.designer.cs">
       <DependentUpon>Relogger.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Ret.cs" />
+    <Compile Include="Services\Globalizer.asmx.cs">
+      <DependentUpon>Globalizer.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Services\Login.asmx.cs">
+      <DependentUpon>Login.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Services\Settings.asmx.cs">
+      <DependentUpon>Settings.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="SideBarLoggerControl.ascx.cs">
       <DependentUpon>SideBarLoggerControl.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -177,18 +229,34 @@
     <Compile Include="SideBarLoggerControl.ascx.designer.cs">
       <DependentUpon>SideBarLoggerControl.ascx</DependentUpon>
     </Compile>
-    <Compile Include="UserSearch.asmx.cs">
+    <Compile Include="Services\UserSearch.asmx.cs">
       <DependentUpon>UserSearch.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Content Include="MainView.ascx" />
+    <Content Include="Services\Globalizer.asmx" />
+    <Content Include="Services\Login.asmx" />
+    <Content Include="Services\Settings.asmx" />
+    <Content Include="Styles\ProxyLoginStyles.css" />
+    <Content Include="Templates\ConfigureView.htm" />
+    <Content Include="Templates\DefaultView.htm" />
+    <Content Include="Templates\Error.htm" />
+    <Content Include="Templates\LogsView.htm" />
     <EmbeddedResource Include="NHibernateMapping.hbm.xml" />
+    <Content Include="Config_View.ascx" />
     <Content Include="Default_View.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
+    <Content Include="Scripts\jquery.observable.min.js" />
+    <Content Include="Scripts\jquery.views.min.js" />
+    <Content Include="Scripts\jsrender.min.js" />
+    <Content Include="Scripts\Portlet.js" />
+    <Content Include="Scripts\ProxyLogin.js" />
     <Content Include="Logs_View.ascx" />
+    <Content Include="Permissions_View.ascx" />
     <Content Include="Relogger.ascx" />
     <Content Include="SideBarLoggerControl.ascx" />
-    <Content Include="UserSearch.asmx" />
+    <Content Include="Services\UserSearch.asmx" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
@@ -221,7 +289,11 @@ md "$(TargetDir)Portal\Portlets\CUS"
 md "$(TargetDir)Portal\Portlets\CUS\ICS"
 md "$(TargetDir)Portal\Portlets\CUS\ICS\$(SolutionName)"
 
+IF "$(ConfigurationName)" == "Portal-devNoDLLCopy" goto :next
+
 copy "$(TargetName).*" "$(TargetDir)Portal\bin\"
+
+:next
 
 cd $(ProjectDir)
 IF EXIST *.ascx copy *.ascx "$(TargetDir)Portal\Portlets\CUS\ICS\$(SolutionName)\"
@@ -232,11 +304,18 @@ IF EXIST *.ashx copy *.ashx "$(TargetDir)Portal\Portlets\CUS\ICS\$(SolutionName)
 IF EXIST images md "$(TargetDir)Portal\Portlets\CUS\ICS\$(SolutionName)\images"
 IF EXIST images copy images\*.* "$(TargetDir)Portal\Portlets\CUS\ICS\$(SolutionName)\images\"
 
-IF EXIST css md "$(TargetDir)Portal\Portlets\CUS\ICS\$(SolutionName)\css"
-IF EXIST css copy css\*.* "$(TargetDir)Portal\Portlets\CUS\ICS\$(SolutionName)\css\"
+md "$(TargetDir)Portal\Portlets\CUS\ICS\$(SolutionName)\Styles"
+copy Styles\*.* "$(TargetDir)Portal\Portlets\CUS\ICS\$(SolutionName)\Styles\"
 
-IF EXIST js md "$(TargetDir)Portal\Portlets\CUS\ICS\$(SolutionName)\js"
-IF EXIST js copy js\*.* "$(TargetDir)Portal\Portlets\CUS\ICS\$(SolutionName)\js\"
+md "$(TargetDir)Portal\Portlets\CUS\ICS\$(SolutionName)\Templates"
+copy Templates\*.* "$(TargetDir)Portal\Portlets\CUS\ICS\$(SolutionName)\Templates\"
+
+md "$(TargetDir)Portal\Portlets\CUS\ICS\$(SolutionName)\Scripts"
+copy Scripts\*.* "$(TargetDir)Portal\Portlets\CUS\ICS\$(SolutionName)\Scripts\"
+
+md "$(TargetDir)Portal\Portlets\CUS\ICS\$(SolutionName)\Services"
+copy Services\*.asmx "$(TargetDir)Portal\Portlets\CUS\ICS\$(SolutionName)\Services\"
+copy Services\*.ashx "$(TargetDir)Portal\Portlets\CUS\ICS\$(SolutionName)\Services\"
 
 
 if "$(ConfigurationName)" == "Dist" goto :Dist

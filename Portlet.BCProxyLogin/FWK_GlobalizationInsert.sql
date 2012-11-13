@@ -5,57 +5,97 @@ GO
 
 
 BEGIN TRANSACTION;
+
+/*
+	New for 2.0
+*/
+DELETE FROM FWK_Globalization WHERE Text_Key in ('CUS_BC_PL_CAN_PROXY_STUDENT','CUS_BC_PL_CAN_PROXY_STUDENT_MSG','CUS_BC_PL_CAN_PROXY_STAFF','CUS_BC_PL_CAN_PROXY_STAFF_MSG','CUS_BC_PL_CAN_PROXY_FACULTY','CUS_BC_PL_CAN_PROXY_FACULTY_MSG','CUS_BC_PL_CAN_PROXY_CANDIDATE','CUS_BC_PL_CAN_PROXY_CANDIDATE_MSG', 'CUS_BC_PL_CAN_PROXY_CONSTITUENT','CUS_BC_PL_CAN_PROXY_CONSTITUENT_MSG' );
+
+IF NOT EXISTS(SELECT Text_Key FROM FWK_Globalization WHERE Text_Key='CUS_BC_PL_DAILY' AND Language_Code='En')
+    INSERT INTO FWK_Globalization (Text_Key, Language_Code, Text_Value,Text_Custom_Value)
+        VALUES ('CUS_BC_PL_DAILY', 'En','Daily',null);
+
+IF NOT EXISTS(SELECT Text_Key FROM FWK_Globalization WHERE Text_Key='CUS_BC_PL_ALLOW' AND Language_Code='En')
+    INSERT INTO FWK_Globalization (Text_Key, Language_Code, Text_Value,Text_Custom_Value)
+        VALUES ('CUS_BC_PL_ALLOW', 'En','Allow',null);
+        
+IF NOT EXISTS(SELECT Text_Key FROM FWK_Globalization WHERE Text_Key='CUS_BC_PL_DENY' AND Language_Code='En')
+    INSERT INTO FWK_Globalization (Text_Key, Language_Code, Text_Value,Text_Custom_Value)
+        VALUES ('CUS_BC_PL_DENY', 'En','Deny',null);
+        
+IF NOT EXISTS(SELECT Text_Key FROM FWK_Globalization WHERE Text_Key='CUS_BC_PL_ENABLE_PW' AND Language_Code='En')
+    INSERT INTO FWK_Globalization (Text_Key, Language_Code, Text_Value,Text_Custom_Value)
+        VALUES ('CUS_BC_PL_ENABLE_PW', 'En','Require the user to enter their password again before proxying?',null);
+        
+IF NOT EXISTS(SELECT Text_Key FROM FWK_Globalization WHERE Text_Key='CUS_BC_PL_LOG_IP' AND Language_Code='En')
+    INSERT INTO FWK_Globalization (Text_Key, Language_Code, Text_Value,Text_Custom_Value)
+        VALUES ('CUS_BC_PL_LOG_IP', 'En','Log IP address of proxy attempts?',null);
+        
+IF NOT EXISTS(SELECT Text_Key FROM FWK_Globalization WHERE Text_Key='CUS_BC_PL_LOG_FAILURES' AND Language_Code='En')
+    INSERT INTO FWK_Globalization (Text_Key, Language_Code, Text_Value,Text_Custom_Value)
+        VALUES ('CUS_BC_PL_LOG_FAILURES', 'En','Log failed attempts?',null);
+        
+IF NOT EXISTS(SELECT Text_Key FROM FWK_Globalization WHERE Text_Key='CUS_BC_PL_ALLOWRELOGIN' AND Language_Code='En')
+    INSERT INTO FWK_Globalization (Text_Key, Language_Code, Text_Value,Text_Custom_Value)
+        VALUES ('CUS_BC_PL_ALLOWRELOGIN', 'En','Enable "re-login" icon in the logs as a shortcut for logging in as a previously proxied user?',null);
+        
+IF NOT EXISTS(SELECT Text_Key FROM FWK_Globalization WHERE Text_Key='CUS_BC_PL_ENABLE_REPORTS' AND Language_Code='En')
+    INSERT INTO FWK_Globalization (Text_Key, Language_Code, Text_Value,Text_Custom_Value)
+        VALUES ('CUS_BC_PL_ENABLE_REPORTS', 'En','Enable periodic reports of proxy activity?',null);
+        
+IF NOT EXISTS(SELECT Text_Key FROM FWK_Globalization WHERE Text_Key='CUS_BC_PL_REPORT_FREQUENCY' AND Language_Code='En')
+    INSERT INTO FWK_Globalization (Text_Key, Language_Code, Text_Value,Text_Custom_Value)
+        VALUES ('CUS_BC_PL_REPORT_FREQUENCY', 'En','How often should the reports be sent out?',null);
+    
+IF NOT EXISTS(SELECT Text_Key FROM FWK_Globalization WHERE Text_Key='CUS_BC_PL_REPORT_ROLES' AND Language_Code='En')
+    INSERT INTO FWK_Globalization (Text_Key, Language_Code, Text_Value,Text_Custom_Value)
+        VALUES ('CUS_BC_PL_REPORT_ROLES', 'En','Who should this report be sent to?',null);    
+        
+IF NOT EXISTS(SELECT Text_Key FROM FWK_Globalization WHERE Text_Key='CUS_BC_PL_PERMISSIONS_RANK' AND Language_Code='En')
+    INSERT INTO FWK_Globalization (Text_Key, Language_Code, Text_Value,Text_Custom_Value)
+        VALUES ('CUS_BC_PL_PERMISSIONS_RANK', 'En','When calculating access permissions, which takes precedence?',null);   
+        
+IF NOT EXISTS(SELECT Text_Key FROM FWK_Globalization WHERE Text_Key='CUS_BC_PL_USAGE_REPORTS_HEADER' AND Language_Code='En')
+    INSERT INTO FWK_Globalization (Text_Key, Language_Code, Text_Value,Text_Custom_Value)
+        VALUES ('CUS_BC_PL_USAGE_REPORTS_HEADER', 'En','Usage Reports',null);   
+
+IF NOT EXISTS(SELECT Text_Key FROM FWK_Globalization WHERE Text_Key='CUS_BC_PL_GENERAL_SETUP_HEADER' AND Language_Code='En')
+    INSERT INTO FWK_Globalization (Text_Key, Language_Code, Text_Value,Text_Custom_Value)
+        VALUES ('CUS_BC_PL_GENERAL_SETUP_HEADER', 'En','General Setup',null);   
+
+IF NOT EXISTS(SELECT Text_Key FROM FWK_Globalization WHERE Text_Key='CUS_BC_PL_REPORT_EMAIL_SUBJECT' AND Language_Code='En')
+    INSERT INTO FWK_Globalization (Text_Key, Language_Code, Text_Value,Text_Custom_Value)
+        VALUES ('CUS_BC_PL_REPORT_EMAIL_SUBJECT', 'En','E-Mail Subject:',null);   
+
+IF NOT EXISTS(SELECT Text_Key FROM FWK_Globalization WHERE Text_Key='CUS_BC_PL_REPORT_EMAIL_BODY' AND Language_Code='En')
+    INSERT INTO FWK_Globalization (Text_Key, Language_Code, Text_Value,Text_Custom_Value)
+        VALUES ('CUS_BC_PL_REPORT_EMAIL_BODY', 'En','Extra Message in E-mail Body:',null);   
+
+IF NOT EXISTS(SELECT [Key] FROM FWK_ConfigSettings WHERE [Category]= 'C_PortletSettings' AND [Key] = 'CUS_BC_PL_ENABLE_REPORTS')
+INSERT INTO [dbo].[FWK_ConfigSettings]([Category],[Key],[Value],[DefaultValue])VALUES('C_PortletSettings','CUS_BC_PL_ENABLE_REPORTS','false','false');     
+
+IF NOT EXISTS(SELECT [Key] FROM FWK_ConfigSettings WHERE [Category]= 'C_PortletSettings' AND [Key] = 'CUS_BC_PL_REPORT_FREQUENCY')
+INSERT INTO [dbo].[FWK_ConfigSettings]([Category],[Key],[Value],[DefaultValue])VALUES('C_PortletSettings','CUS_BC_PL_REPORT_FREQUENCY','N','N');     
+
+IF NOT EXISTS(SELECT [Key] FROM FWK_ConfigSettings WHERE [Category]= 'C_PortletSettings' AND [Key] = 'CUS_BC_PL_REPORT_ROLES')
+INSERT INTO [dbo].[FWK_ConfigSettings]([Category],[Key],[Value],[DefaultValue])VALUES('C_PortletSettings','CUS_BC_PL_REPORT_ROLES','','');
+
+IF NOT EXISTS(SELECT [Key] FROM FWK_ConfigSettings WHERE [Category]= 'C_PortletSettings' AND [Key] = 'CUS_BC_PL_REPORT_EMAIL_SUBJECT')
+INSERT INTO [dbo].[FWK_ConfigSettings]([Category],[Key],[Value],[DefaultValue])VALUES('C_PortletSettings','CUS_BC_PL_REPORT_EMAIL_SUBJECT','{Type} Proxy Login Report','');
+
+IF NOT EXISTS(SELECT [Key] FROM FWK_ConfigSettings WHERE [Category]= 'C_PortletSettings' AND [Key] = 'CUS_BC_PL_REPORT_EMAIL_BODY')
+INSERT INTO [dbo].[FWK_ConfigSettings]([Category],[Key],[Value],[DefaultValue])VALUES('C_PortletSettings','CUS_BC_PL_REPORT_EMAIL_BODY','The following is the report for the {Type} proxy login usage.','');
+
+
+/* 1.13 */
+
+
 IF NOT EXISTS(SELECT Text_Key FROM FWK_Globalization WHERE Text_Key='CUS_BC_PL_CAN_VIEW_SIDEBAR_CONTROL' AND Language_Code='En')
     INSERT INTO FWK_Globalization (Text_Key, Language_Code, Text_Value,Text_Custom_Value)
         VALUES ('CUS_BC_PL_CAN_VIEW_SIDEBAR_CONTROL', 'En','Can See SideBar Control',null);
 IF NOT EXISTS(SELECT Text_Key FROM FWK_Globalization WHERE Text_Key='CUS_BC_PL_CAN_VIEW_SIDEBAR_CONTROL_MSG' AND Language_Code='En')
     INSERT INTO FWK_Globalization (Text_Key, Language_Code, Text_Value,Text_Custom_Value)
         VALUES ('CUS_BC_PL_CAN_VIEW_SIDEBAR_CONTROL_MSG', 'En','Allows User to See the Proxy Login Tools Sidebar Control to Login',null);
-IF NOT EXISTS(SELECT Text_Key FROM FWK_Globalization WHERE Text_Key='CUS_BC_PL_CAN_PROXY_STUDENT' AND Language_Code='En')
-    INSERT INTO FWK_Globalization (Text_Key, Language_Code, Text_Value,Text_Custom_Value)
-        VALUES ('CUS_BC_PL_CAN_PROXY_STUDENT', 'En','Can Proxy Student',null);
-IF NOT EXISTS(SELECT Text_Key FROM FWK_Globalization WHERE Text_Key='CUS_BC_PL_CAN_PROXY_STUDENT_MSG' AND Language_Code='En')
-    INSERT INTO FWK_Globalization (Text_Key, Language_Code, Text_Value,Text_Custom_Value)
-        VALUES ('CUS_BC_PL_CAN_PROXY_STUDENT_MSG', 'En','Allows User to Proxy Users with the Student Role',null);
-IF NOT EXISTS(SELECT Text_Key FROM FWK_Globalization WHERE Text_Key='CUS_BC_PL_STUDENT_PERMS' AND Language_Code='En')
-    INSERT INTO FWK_Globalization (Text_Key, Language_Code, Text_Value,Text_Custom_Value)
-        VALUES ('CUS_BC_PL_STUDENT_PERMS', 'En','User has the Student Role, but you are not authorized to proxy students',null);
-IF NOT EXISTS(SELECT Text_Key FROM FWK_Globalization WHERE Text_Key='CUS_BC_PL_CAN_PROXY_STAFF' AND Language_Code='En')
-    INSERT INTO FWK_Globalization (Text_Key, Language_Code, Text_Value,Text_Custom_Value)
-        VALUES ('CUS_BC_PL_CAN_PROXY_STAFF', 'En','Can Proxy Staff',null);
-IF NOT EXISTS(SELECT Text_Key FROM FWK_Globalization WHERE Text_Key='CUS_BC_PL_CAN_PROXY_STAFF_MSG' AND Language_Code='En')
-    INSERT INTO FWK_Globalization (Text_Key, Language_Code, Text_Value,Text_Custom_Value)
-        VALUES ('CUS_BC_PL_CAN_PROXY_STAFF_MSG', 'En','Allows User to Proxy Users with the Staff Role',null);
-IF NOT EXISTS(SELECT Text_Key FROM FWK_Globalization WHERE Text_Key='CUS_BC_PL_STAFF_PERMS' AND Language_Code='En')
-    INSERT INTO FWK_Globalization (Text_Key, Language_Code, Text_Value,Text_Custom_Value)
-        VALUES ('CUS_BC_PL_STAFF_PERMS', 'En','User has the Staff Role, but you are not authorized to proxy staff',null);
-IF NOT EXISTS(SELECT Text_Key FROM FWK_Globalization WHERE Text_Key='CUS_BC_PL_CAN_PROXY_FACULTY' AND Language_Code='En')
-    INSERT INTO FWK_Globalization (Text_Key, Language_Code, Text_Value,Text_Custom_Value)
-        VALUES ('CUS_BC_PL_CAN_PROXY_FACULTY', 'En','Can Proxy Faculty',null);
-IF NOT EXISTS(SELECT Text_Key FROM FWK_Globalization WHERE Text_Key='CUS_BC_PL_CAN_PROXY_FACULTY_MSG' AND Language_Code='En')
-    INSERT INTO FWK_Globalization (Text_Key, Language_Code, Text_Value,Text_Custom_Value)
-        VALUES ('CUS_BC_PL_CAN_PROXY_FACULTY_MSG', 'En','Allows User to Proxy Users with the Faculty Role',null);
-IF NOT EXISTS(SELECT Text_Key FROM FWK_Globalization WHERE Text_Key='CUS_BC_PL_FACULTY_PERMS' AND Language_Code='En')
-    INSERT INTO FWK_Globalization (Text_Key, Language_Code, Text_Value,Text_Custom_Value)
-        VALUES ('CUS_BC_PL_FACULTY_PERMS', 'En','User has the Faculty Role, but you are not authorized to proxy faculty',null);
-IF NOT EXISTS(SELECT Text_Key FROM FWK_Globalization WHERE Text_Key='CUS_BC_PL_CAN_PROXY_CANDIDATE' AND Language_Code='En')
-    INSERT INTO FWK_Globalization (Text_Key, Language_Code, Text_Value,Text_Custom_Value)
-        VALUES ('CUS_BC_PL_CAN_PROXY_CANDIDATE', 'En','Can Proxy Candidate',null);
-IF NOT EXISTS(SELECT Text_Key FROM FWK_Globalization WHERE Text_Key='CUS_BC_PL_CAN_PROXY_CANDIDATE_MSG' AND Language_Code='En')
-    INSERT INTO FWK_Globalization (Text_Key, Language_Code, Text_Value,Text_Custom_Value)
-        VALUES ('CUS_BC_PL_CAN_PROXY_CANDIDATE_MSG', 'En','Allows User to Proxy Users with the Candidate Role',null);
-IF NOT EXISTS(SELECT Text_Key FROM FWK_Globalization WHERE Text_Key='CUS_BC_PL_CANDIDATE_PERMS' AND Language_Code='En')
-    INSERT INTO FWK_Globalization (Text_Key, Language_Code, Text_Value,Text_Custom_Value)
-        VALUES ('CUS_BC_PL_CANDIDATE_PERMS', 'En','User has the Candidate Role, but you are not authorized to proxy candidates',null);
-IF NOT EXISTS(SELECT Text_Key FROM FWK_Globalization WHERE Text_Key='CUS_BC_PL_CAN_PROXY_CONSTITUENT' AND Language_Code='En')
-    INSERT INTO FWK_Globalization (Text_Key, Language_Code, Text_Value,Text_Custom_Value)
-        VALUES ('CUS_BC_PL_CAN_PROXY_CONSTITUENT', 'En','Can Proxy Constituent',null);
-IF NOT EXISTS(SELECT Text_Key FROM FWK_Globalization WHERE Text_Key='CUS_BC_PL_CAN_PROXY_CONSTITUENT_MSG' AND Language_Code='En')
-    INSERT INTO FWK_Globalization (Text_Key, Language_Code, Text_Value,Text_Custom_Value)
-        VALUES ('CUS_BC_PL_CAN_PROXY_CONSTITUENT_MSG', 'En','Allows User to Proxy Users with the Constituent Role',null);
-IF NOT EXISTS(SELECT Text_Key FROM FWK_Globalization WHERE Text_Key='CUS_BC_PL_CONSTITUENT_PERMS' AND Language_Code='En')
-    INSERT INTO FWK_Globalization (Text_Key, Language_Code, Text_Value,Text_Custom_Value)
-        VALUES ('CUS_BC_PL_CONSTITUENT_PERMS', 'En','User has the Constituent Role, but you are not authorized to proxy constituents',null);
 IF NOT EXISTS(SELECT Text_Key FROM FWK_Globalization WHERE Text_Key='CUS_BC_PL_SITE_ADMIN_PERMS' AND Language_Code='En')
     INSERT INTO FWK_Globalization (Text_Key, Language_Code, Text_Value,Text_Custom_Value)
         VALUES ('CUS_BC_PL_SITE_ADMIN_PERMS', 'En','User is a site admin, cannot proxy site admins',null);
@@ -98,6 +138,7 @@ IF NOT EXISTS(SELECT Text_Key FROM FWK_Globalization WHERE Text_Key='CUS_BC_PL_A
 
 
 
+
 IF NOT EXISTS(SELECT [Key] FROM FWK_ConfigSettings WHERE [Category]= 'C_PortletSettings' AND [Key] = 'CUS_BC_PL_ENABLE_PW')
 INSERT INTO [dbo].[FWK_ConfigSettings]([Category],[Key],[Value],[DefaultValue])VALUES('C_PortletSettings','CUS_BC_PL_ENABLE_PW','false','false');
 
@@ -109,7 +150,8 @@ INSERT INTO [dbo].[FWK_ConfigSettings]([Category],[Key],[Value],[DefaultValue])V
 
 IF NOT EXISTS(SELECT [Key] FROM FWK_ConfigSettings WHERE [Category]= 'C_PortletSettings' AND [Key] = 'CUS_BC_PL_ALLOWRELOGIN')
 INSERT INTO [dbo].[FWK_ConfigSettings]([Category],[Key],[Value],[DefaultValue])VALUES('C_PortletSettings','CUS_BC_PL_ALLOWRELOGIN','true','true');     
-      
+
+
 GO
 
 

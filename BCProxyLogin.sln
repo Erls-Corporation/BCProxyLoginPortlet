@@ -6,12 +6,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Go.BCProxyLogin", "Go.BCPro
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
 		Dist|Any CPU = Dist|Any CPU
 		None|Any CPU = None|Any CPU
 		Portal|Any CPU = Portal|Any CPU
 		Portal-dev|Any CPU = Portal-dev|Any CPU
+		Portal-devNoDLLCopy|Any CPU = Portal-devNoDLLCopy|Any CPU
+		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FAA706A6-F496-483E-9710-1451AE15FB27}.Debug|Any CPU.ActiveCfg = Dist|Any CPU
+		{FAA706A6-F496-483E-9710-1451AE15FB27}.Debug|Any CPU.Build.0 = Dist|Any CPU
 		{FAA706A6-F496-483E-9710-1451AE15FB27}.Dist|Any CPU.ActiveCfg = Dist|Any CPU
 		{FAA706A6-F496-483E-9710-1451AE15FB27}.Dist|Any CPU.Build.0 = Dist|Any CPU
 		{FAA706A6-F496-483E-9710-1451AE15FB27}.None|Any CPU.ActiveCfg = None|Any CPU
@@ -20,6 +25,12 @@ Global
 		{FAA706A6-F496-483E-9710-1451AE15FB27}.Portal|Any CPU.Build.0 = Portal|Any CPU
 		{FAA706A6-F496-483E-9710-1451AE15FB27}.Portal-dev|Any CPU.ActiveCfg = Portal-dev|Any CPU
 		{FAA706A6-F496-483E-9710-1451AE15FB27}.Portal-dev|Any CPU.Build.0 = Portal-dev|Any CPU
+		{FAA706A6-F496-483E-9710-1451AE15FB27}.Portal-devNoDLLCopy|Any CPU.ActiveCfg = Portal-devNoDLLCopy|Any CPU
+		{FAA706A6-F496-483E-9710-1451AE15FB27}.Portal-devNoDLLCopy|Any CPU.Build.0 = Portal-devNoDLLCopy|Any CPU
+		{FAA706A6-F496-483E-9710-1451AE15FB27}.Release|Any CPU.ActiveCfg = Dist|Any CPU
+		{FAA706A6-F496-483E-9710-1451AE15FB27}.Release|Any CPU.Build.0 = Dist|Any CPU
+		{DAC84122-B749-4036-98DE-388BC473FA1C}.Debug|Any CPU.ActiveCfg = Dist|Any CPU
+		{DAC84122-B749-4036-98DE-388BC473FA1C}.Debug|Any CPU.Build.0 = Dist|Any CPU
 		{DAC84122-B749-4036-98DE-388BC473FA1C}.Dist|Any CPU.ActiveCfg = Dist|Any CPU
 		{DAC84122-B749-4036-98DE-388BC473FA1C}.Dist|Any CPU.Build.0 = Dist|Any CPU
 		{DAC84122-B749-4036-98DE-388BC473FA1C}.None|Any CPU.ActiveCfg = None|Any CPU
@@ -28,6 +39,10 @@ Global
 		{DAC84122-B749-4036-98DE-388BC473FA1C}.Portal|Any CPU.Build.0 = Portal|Any CPU
 		{DAC84122-B749-4036-98DE-388BC473FA1C}.Portal-dev|Any CPU.ActiveCfg = Portal-dev|Any CPU
 		{DAC84122-B749-4036-98DE-388BC473FA1C}.Portal-dev|Any CPU.Build.0 = Portal-dev|Any CPU
+		{DAC84122-B749-4036-98DE-388BC473FA1C}.Portal-devNoDLLCopy|Any CPU.ActiveCfg = Portal-devNoDLLCopy|Any CPU
+		{DAC84122-B749-4036-98DE-388BC473FA1C}.Portal-devNoDLLCopy|Any CPU.Build.0 = Portal-devNoDLLCopy|Any CPU
+		{DAC84122-B749-4036-98DE-388BC473FA1C}.Release|Any CPU.ActiveCfg = None|Any CPU
+		{DAC84122-B749-4036-98DE-388BC473FA1C}.Release|Any CPU.Build.0 = None|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -22,6 +22,7 @@ namespace BCProxyLogin.Entities
     {
         public IList<Logger> GetLogs(Guid portletId)
         {
+            
             return GetQuery().Where(x => x.PortletId == portletId).OrderBy(x => x.Time).ToList();
         }
 

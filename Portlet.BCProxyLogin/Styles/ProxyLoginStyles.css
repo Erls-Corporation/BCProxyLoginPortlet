@@ -1,0 +1,87 @@
+﻿div#bcPLDefaultView ul li label
+{
+    display: inline-block;
+    width: 250px !important;
+}
+div#bcPLDefaultView
+{
+    margin-top: 5px;
+}
+div#bcPLViewContainer {
+    margin-top: 5px;
+}
+
+div.ArrowTabBar ul li
+{
+    float: left;
+    padding: 5px;
+    cursor: pointer;
+}
+div.ArrowTabBar
+{
+    height: 32px;
+    border-bottom: 1px solid #A2A2A2;
+    border-radius: 4px;
+    margin-top: 5px;
+    padding: 3px;
+}
+div.ArrowTabBar ul li.tabSelected:after, div.ArrowTabBar ul li.tabSelected:before
+{
+    top: 100%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+div.ArrowTabBar ul li.tabSelected:after
+{
+    border-color: rgba(51, 51, 51, 0);
+    border-top-color: #0B4981;
+    border-width: 5px;
+    left: 50%;
+    margin-left: -5px;
+}
+div.ArrowTabBar ul li.tabSelected:before
+{
+    border-color: rgba(51, 51, 51, 0);
+    border-top-color: #0B4981;
+    border-width: 11px;
+    left: 50%;
+    margin-left: -11px;
+}
+div.ArrowTabBar ul li.tabSelected
+{
+    position: relative;
+    background: #0B4981;
+    border: 4px solid #0B4981;
+    border-radius: 4px;
+    color: #FFFFFF;
+    font-weight: bold;
+    margin: 0px;
+}
+
+div.ArrowTabBar ul li.tabSelected:hover
+{
+    position: relative;
+    background: #0B4981;
+    border: 4px solid #0B4981;
+    border-radius: 4px;
+    color: #FFFFFF;
+    font-weight: bold;
+    margin: 0px;
+}
+
+div.ArrowTabBar ul li
+{
+    position: relative;
+    margin: 4px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+div.ArrowTabBar ul li:hover
+{
+    border: 2px solid #0B4981;
+    margin: 2px;
+}

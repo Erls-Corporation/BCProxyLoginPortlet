@@ -41,35 +41,39 @@ namespace BCProxyLogin
 
     #endregion
 
-    #region "Settings - Optional"
-
-    #endregion
-
     public class BCProxyLogin : SecuredPortletBase
 	{
 		protected override PortletViewBase GetCurrentScreen()
 		{
+		    return LoadPortletView("ICS/BCProxyLogin/MainView.ascx");
+
 			switch(CurrentPortletScreenName)
 			{
-				case "Default":
-					return LoadPortletView("ICS/BCProxyLogin/Default_View.ascx");
-			    case "BCViewLogs":
+				case "ViewLogs":
                     State = PortletState.Maximized;
                     return LoadPortletView("ICS/BCProxyLogin/Logs_View.ascx");
-				default:
+                case "Permissions":
+                    State = PortletState.Maximized;
+                    return LoadPortletView("ICS/BCProxyLogin/Permissions_View.ascx");
+                case "Configure":
+                    State = PortletState.Maximized;
+			        return LoadPortletView("ICS/BCProxyLogin/Config_View.ascx");
+                default:
 					return LoadPortletView("ICS/BCProxyLogin/Default_View.ascx");
 			}
 		}
 
-        protected override bool PopulateToolbar(Toolbar toolbar)
-        {
-            toolbar.MenuItems.Add("View Proxy Logs", "BCViewLogs");
-            return PortalUser.Current.IsSiteAdmin;
-        }
+        //protected override bool PopulateToolbar(Toolbar toolbar)
+        //{
+        //    //toolbar.MenuItems.Add("View Logs", "ViewLogs");
+        //    //toolbar.MenuItems.Add("Permissions", "Permissions");
+        //    //toolbar.MenuItems.Add("Configure", "Configure");
+        //    return PortalUser.Current.IsSiteAdmin;
+        //}
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
-            Toolbar.ItemCommand += ToolbarItemCommand;
+            //Toolbar.ItemCommand += ToolbarItemCommand;
         }
 
         void ToolbarItemCommand(object sender, System.Web.UI.WebControls.CommandEventArgs e)
@@ -83,6 +87,11 @@ namespace BCProxyLogin
             JCUtilities.ResolveUrl(url);
 
             response.Redirect(url, false);
+        }
+
+        public static string GetReturnUrl()
+        {
+            return PortalContext.RootContext.URL;
         }
 	}
 
