@@ -247,10 +247,6 @@
     <Content Include="Default_View.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
-    <Content Include="Scripts\jquery.observable.min.js" />
-    <Content Include="Scripts\jquery.views.min.js" />
-    <Content Include="Scripts\jsrender.min.js" />
-    <Content Include="Scripts\Portlet.js" />
     <Content Include="Scripts\ProxyLogin.js" />
     <Content Include="Logs_View.ascx" />
     <Content Include="Permissions_View.ascx" />
