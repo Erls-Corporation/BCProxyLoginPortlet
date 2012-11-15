@@ -23,19 +23,18 @@ namespace BCProxyLogin.Services
         private readonly IGlobalizer _globalizer = ObjectFactoryWrapper.GetInstance<IGlobalizer>();
 
         [WebMethod(EnableSession = true)]
-        public IDictionary<String, String> GetGlobalizedText(String viewName)
+        public IDictionary<String, String> GetGlobalizedText()
         {
             var portlet = ObjectFactoryWrapper.GetInstance<IPortletTemplateFacade>().FindByName("[CUS] BCProxyLogin");
             var dict = new Dictionary<String, String>();
             if (!portlet.AccessCheck("CANACCESS"))
                 return dict;
 
-            switch(viewName)
-            {
-                case "Default":
-                    GetDefaultViewGlobalizations(dict);
-                    break;
-            }
+            dict.Add("labelUserName", _globalizer.GetString("CUS_BC_PL_USERNAME_LABEL_TEXT"));
+            dict.Add("labelPassword", _globalizer.GetString("CUS_BC_PL_PASSWORD_LABEL_TEXT"));
+            dict.Add("labelReason", _globalizer.GetString("CUS_BC_PL_REASON_LABEL_TEXT"));
+
+            dict.Add("EnablePassword", ConfigSettings.GetConfigValue("C_PortletSettings", "CUS_BC_PL_ENABLE_PW"));
 
             return dict;
         }
@@ -45,15 +44,5 @@ namespace BCProxyLogin.Services
         {
             return PortalUser.Current.IsSiteAdmin;
         }
-
-        private void GetDefaultViewGlobalizations(Dictionary<string, string> dict)
-        {
-            dict.Add("labelUserName", _globalizer.GetString("CUS_BC_PL_USERNAME_LABEL_TEXT"));
-            dict.Add("labelPassword", _globalizer.GetString("CUS_BC_PL_PASSWORD_LABEL_TEXT"));
-            dict.Add("labelReason", _globalizer.GetString("CUS_BC_PL_REASON_LABEL_TEXT"));
-
-            dict.Add("EnablePassword", ConfigSettings.GetConfigValue("C_PortletSettings", "CUS_BC_PL_ENABLE_PW"));
-        }
-
     }
 }

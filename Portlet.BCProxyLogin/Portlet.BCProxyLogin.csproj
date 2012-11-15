@@ -234,20 +234,28 @@
       <SubType>Component</SubType>
     </Compile>
     <Content Include="MainView.ascx" />
+    <Content Include="Scripts\Backbone\app.js" />
+    <Content Include="Scripts\Backbone\assets\base.js" />
+    <Content Include="Scripts\Backbone\assets\lodash.min.js" />
+    <Content Include="Scripts\Backbone\collections\ProxyLogin.js" />
+    <Content Include="Scripts\Backbone\lib\backbone-asmx.js" />
+    <Content Include="Scripts\Backbone\lib\backbone-localstorage.js" />
+    <Content Include="Scripts\Backbone\lib\backbone-min.js" />
+    <Content Include="Scripts\Backbone\lib\template-cache.js" />
+    <Content Include="Scripts\Backbone\models\ProxyLogin.js" />
+    <Content Include="Scripts\Backbone\routers\router.js" />
+    <Content Include="Scripts\Backbone\views\app.js" />
+    <Content Include="Scripts\Backbone\views\ProxyLogin.js" />
+    <Content Include="Scripts\ProxyLogin.js" />
     <Content Include="Services\Globalizer.asmx" />
     <Content Include="Services\Login.asmx" />
     <Content Include="Services\Settings.asmx" />
     <Content Include="Styles\ProxyLoginStyles.css" />
-    <Content Include="Templates\ConfigureView.htm" />
-    <Content Include="Templates\DefaultView.htm" />
-    <Content Include="Templates\Error.htm" />
-    <Content Include="Templates\LogsView.htm" />
     <EmbeddedResource Include="NHibernateMapping.hbm.xml" />
     <Content Include="Config_View.ascx" />
     <Content Include="Default_View.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
-    <Content Include="Scripts\ProxyLogin.js" />
     <Content Include="Logs_View.ascx" />
     <Content Include="Permissions_View.ascx" />
     <Content Include="Relogger.ascx" />
@@ -303,11 +311,8 @@ IF EXIST images copy images\*.* "$(TargetDir)Portal\Portlets\CUS\ICS\$(SolutionN
 md "$(TargetDir)Portal\Portlets\CUS\ICS\$(SolutionName)\Styles"
 copy Styles\*.* "$(TargetDir)Portal\Portlets\CUS\ICS\$(SolutionName)\Styles\"
 
-md "$(TargetDir)Portal\Portlets\CUS\ICS\$(SolutionName)\Templates"
-copy Templates\*.* "$(TargetDir)Portal\Portlets\CUS\ICS\$(SolutionName)\Templates\"
-
 md "$(TargetDir)Portal\Portlets\CUS\ICS\$(SolutionName)\Scripts"
-copy Scripts\*.* "$(TargetDir)Portal\Portlets\CUS\ICS\$(SolutionName)\Scripts\"
+xcopy Scripts\*.* "$(TargetDir)Portal\Portlets\CUS\ICS\$(SolutionName)\Scripts\" /E /Y
 
 md "$(TargetDir)Portal\Portlets\CUS\ICS\$(SolutionName)\Services"
 copy Services\*.asmx "$(TargetDir)Portal\Portlets\CUS\ICS\$(SolutionName)\Services\"
