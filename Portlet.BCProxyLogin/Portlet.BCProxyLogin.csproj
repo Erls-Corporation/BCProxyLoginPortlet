@@ -246,7 +246,7 @@
     <Content Include="Scripts\Backbone\routers\router.js" />
     <Content Include="Scripts\Backbone\views\app.js" />
     <Content Include="Scripts\Backbone\views\ProxyLogin.js" />
-    <Content Include="Scripts\ProxyLogin.js" />
+    <None Include="Scripts\ProxyLogin.js.old" />
     <Content Include="Services\Globalizer.asmx" />
     <Content Include="Services\Login.asmx" />
     <Content Include="Services\Settings.asmx" />
